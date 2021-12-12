@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ea-project
+  datasource:
+    url: jdbc:mysql://localhost:3306/ea-project
+    username: root
+    password: CS544-EA
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximumPoolSize: 10
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+logging:
+  file:
+    name: C:\Users\613429\Desktop\ea-project\${spring.application.name}\log
