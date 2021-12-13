@@ -3,10 +3,7 @@ package cs544.team1.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Embedded;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,9 +26,8 @@ public class RegistrationGroup {
     @OneToMany
     private List<AcademicBlock> academicBlocks = new ArrayList<>();
     @OneToMany
-    private RegistrationEvent registrationEvent;
-    @OneToMany(mappedBy = "registrationGroup")
-    private List<Student> students = new ArrayList<>();
+    @JoinColumn(name="registration_event_id")
+    private List<RegistrationEvent> registrationEvents = new ArrayList<>();
     @Embedded
-	private Audit audit;
+    private Audit audit;
 }

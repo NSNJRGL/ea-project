@@ -18,13 +18,7 @@ public class Registration {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-    @ManyToOne
-    @JoinColumn(name = "course_offering_id")
-    private CourseOffering courseOffering;
-    private RegistrationRequest regRequest;
+
     @Embedded
 	private Audit audit;
 }

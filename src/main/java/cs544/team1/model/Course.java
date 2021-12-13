@@ -15,14 +15,13 @@ import javax.persistence.SecondaryTable;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SecondaryTable(name = "description")
+
 public class Course {
     @Id
     @GeneratedValue
     private long id;
     private String courseCode;
     private String courseName;
-    // @Table(name = "description")
     private String description;
     @Embedded
 	private Audit audit;
