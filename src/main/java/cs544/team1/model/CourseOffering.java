@@ -19,7 +19,6 @@ public class CourseOffering {
     @OneToOne
     private Course course;
     private int capacity;
-    private int availableSeats;
     @OneToOne
     private Faculty faculty;
     @OneToOne
