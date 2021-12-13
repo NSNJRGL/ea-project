@@ -1,27 +1,50 @@
 package cs544.team1.model;
 
 import java.time.LocalDateTime;
+import javax.persistence.*;
+import cs544.team1.utils.LoggedInUser;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Embeddable;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
+@NoArgsConstructor
+@Getter
+@Setter
 @Embeddable
+
 public class Audit {
-	@CreationTimestamp
-	private LocalDateTime createdAt;
-	@UpdateTimestamp
-	private LocalDateTime updatedAt;
-	private Person createdBy;
-	private Person modifiedBy;
-	
-	public Audit(Person createdBy, Person modifiedBy) {
-		this.createdBy = createdBy;
-		this.modifiedBy = modifiedBy;
-	}
-	
-	public Audit(Person modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+
+//    @Column(name = "created_at")
+//
+//    private LocalDateTime createdOn;
+
+//    @OneToOne()
+//    @Column(name="created_by",updatable = false, insertable = false)
+    //private Person createdBy;
+
+//    @Column(name = "updated_at")
+
+//    private LocalDateTime updatedOn;
+
+//    @OneToOne
+//    private Person updatedBy;
+
+//    @PrePersist
+//    public void prePersist() {
+
+        //createdOn = LocalDateTime.now();
+
+     //   createdBy = LoggedInUser.get();
+
+//    }
+
+//    @PreUpdate
+//
+//    public void preUpdate() {
+//
+//        updatedOn = LocalDateTime.now();
+//
+//        updatedBy = LoggedInUser.get();
+//
+//    }
 }

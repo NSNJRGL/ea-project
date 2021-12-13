@@ -2,10 +2,8 @@ package cs544.team1.model;
 
 import lombok.*;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Data
 @Getter
 @Setter
@@ -17,9 +15,9 @@ public class RegistrationRequest {
     @Id
     @GeneratedValue
     private long id;
-    private Student student;
-    private  CourseOffering courseOffering;
-    private  boolean status;
+    private int priority;
+    @Enumerated(EnumType.STRING)
+    private Status status;
     @Embedded
 	private Audit audit;
 }

@@ -25,8 +25,14 @@ public class CourseOffering {
     @OneToOne
     private AcademicBlock block;
     
-    @OneToMany(mappedBy = "courseOffering")
+    @OneToMany
+    @JoinColumn(name="course_offering_id")
 	private List<Registration> registrations = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name="course_offering_id")
+    private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
+
     @Embedded
 	private Audit audit;
 }

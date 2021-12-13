@@ -15,13 +15,8 @@ import lombok.Setter;
 @Embeddable
 @NoArgsConstructor
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 public class Address {
-	@Id
-	@GeneratedValue
-	private long id;
 	@Column(nullable = false)
 	private String street;
 	@Column(nullable = false)
