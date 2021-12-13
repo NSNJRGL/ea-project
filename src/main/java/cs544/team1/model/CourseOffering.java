@@ -21,9 +21,13 @@ public class CourseOffering {
     private int capacity;
     @OneToOne
     private Faculty faculty;
-    @OneToOne
+
+
+    @ManyToOne
+    @JoinColumn(name = "block_id")
     private AcademicBlock block;
-    
+
+
     @OneToMany
     @JoinColumn(name="course_offering_id")
 	private List<Registration> registrations = new ArrayList<>();
