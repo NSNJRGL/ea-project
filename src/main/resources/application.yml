@@ -19,4 +19,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 logging:
   file:
-    name: C:\Users\613429\Desktop\ea-project\${spring.application.name}\log
+    name: C:\Users\613429\Desktop\ea-project\log
