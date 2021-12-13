@@ -18,6 +18,7 @@ import lombok.ToString;
 @Setter @Getter
 @ToString
 @AllArgsConstructor
+@Entity
 public class RegistrationGroup {
     @Id
     @GeneratedValue
