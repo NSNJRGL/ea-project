@@ -42,10 +42,8 @@ public class AcademincBlockSericeImpl implements  IAcademicBlockService{
     public List<AcademicBlock> findAll() {
         List<AcademicBlock> list= new ArrayList<>();
         Audit a= new Audit();
-        list.add(new AcademicBlock(1,"codd1","name1", LocalDate.now(),
-                LocalDate.now(), Semester.SPRING,a));
-
         return list;
+
 
     }
 
