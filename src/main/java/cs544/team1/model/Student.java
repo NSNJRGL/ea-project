@@ -25,11 +25,13 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 public class Student extends Person {
 	private String studentId;
-	@ManyToOne
-	@JoinColumn(name="registration_group_id")
-	private RegistrationGroup registrationGroup;
-	@OneToMany(mappedBy = "student")
+	@OneToMany
+	@JoinColumn(name="student_id")
 	private List<Registration> registrations = new ArrayList<>();
+
+	@OneToMany
+	@JoinColumn(name="student_id")
+	private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
 	@Embedded
 	private Audit audit;
 }
