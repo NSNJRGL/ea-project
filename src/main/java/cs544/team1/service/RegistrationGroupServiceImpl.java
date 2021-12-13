@@ -1,5 +1,8 @@
 package cs544.team1.service;
 
+import cs544.team1.model.RegistrationGroup;
+import cs544.team1.repository.RegistrationGroupRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,19 +10,22 @@ import java.util.Optional;
 
 @Service
 public class RegistrationGroupServiceImpl implements IRegistrationGroupService  {
+    @Autowired
+    RegistrationGroupRepository repository;
+
     @Override
     public List findAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public Object save(Object o) {
-        return null;
+        return repository.save((RegistrationGroup) o);
     }
 
     @Override
     public Optional findById(int id) {
-        return Optional.empty();
+        return repository.findById(id);
     }
 
     @Override

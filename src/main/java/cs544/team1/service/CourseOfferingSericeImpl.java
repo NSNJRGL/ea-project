@@ -2,7 +2,11 @@ package cs544.team1.service;
 
 import cs544.team1.model.AcademicBlock;
 import cs544.team1.model.Audit;
+import cs544.team1.model.CourseOffering;
 import cs544.team1.model.Semester;
+import cs544.team1.repository.CourseOfferingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,14 +17,16 @@ import java.util.Optional;
 @Service
 public class CourseOfferingSericeImpl implements  ICourseOfferingService{
 
+    @Autowired
+    CourseOfferingRepository repository;
     @Override
     public Object save(Object o) {
-        return null;
+        return repository.save((CourseOffering) o);
     }
 
     @Override
     public Optional findById(int id) {
-        return Optional.empty();
+        return repository.findById(id);
     }
 
     @Override
