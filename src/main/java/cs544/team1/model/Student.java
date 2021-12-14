@@ -35,4 +35,8 @@ public class Student extends Person {
 	private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
 	@Embedded
 	private Audit audit;
+	
+	public void addRegistrationReq(RegistrationRequest req) {
+		registrationsRequests.add(req);
+	}
 }

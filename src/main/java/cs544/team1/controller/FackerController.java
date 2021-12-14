@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -33,6 +34,9 @@ public class FackerController {
 
 	@Autowired
 	IRegistrationEventService registrationEventService;
+	
+	@Autowired
+	IRegistrationRequestService registrationRequestService;
 
 	@Autowired
 	IRegistrationGroupService registrationGroupService;
@@ -107,7 +111,7 @@ public class FackerController {
 
 	public void fakerStudent() {
 		Faker faker = new Faker();
-		for (int i = 100; i < 600; i++) {
+		for (int i = 100; i < 200; i++) {
 			Student student = new Student();
 			student.setFirstName(faker.address().firstName());
 			student.setLastName(faker.address().lastName());
@@ -156,17 +160,54 @@ public class FackerController {
 		List<Course> courses = courseService.findAll();
 		List<Faculty> faculties = facultyService.findAll();
 		List<AcademicBlock> academicBlocks = academicBlockService.findAll();
-		String facultyName = "" + faculties.get(0).getFirstName().charAt(0) + faculties.get(0).getLastName().charAt(0);
+		List<Student> students = studentService.findAll();
+
+		int i = 0;
 		for(Course course : courses) {
+			Random r = new Random();
+			int facultyRandom =  r.nextInt(faculties.size());
+			int academicRandom =  r.nextInt(academicBlocks.size());
+			String facultyName = "" + faculties.get(facultyRandom).getFirstName().charAt(0) + faculties.get(facultyRandom).getLastName().charAt(0);
 			String courseCode = course.getCourseCode();
 			CourseOffering courseOffering = new CourseOffering();
-			courseOffering.setCode(courseCode + "-" + academicBlocks.get(0).getCode() + "-" + facultyName );
-			courseOffering.setFaculty(faculties.get(0));
+			courseOffering.setCode(courseCode + "-" + academicBlocks.get(academicRandom).getCode() + "-" + facultyName );
+			courseOffering.setFaculty(faculties.get(facultyRandom));
 			courseOffering.setCourse(course);
-			courseOffering.setBlock(academicBlocks.get(0));
+			courseOffering.setBlock(academicBlocks.get(academicRandom));
 			courseOffering.setCapacity(40);
+			List<RegistrationRequest> registReq = new ArrayList<>();
+			i++;
+			
+			for(Student student : students) {
+				RegistrationRequest req = new RegistrationRequest();
+				req.setPriority(i);
+				req.setStatus(Status.PENDING);
+				
+				registrationRequestService.save(req);
+				
+				registReq.add(req);
+				student.addRegistrationReq(req);
+			}
+			
+			courseOffering.setRegistrationsRequests(registReq);
 			
 			courseOfferingService.save(courseOffering);
 		}
 	}
+	
+//	public void fakerRegistrationRequest() {
+//		List<Student> students = studentService.findAll();
+//		List<CourseOffering> courseOfferings = courseOfferingService.findAll();
+//		
+//		for(Student student : students) {
+//			Random r = new Random();
+//			courseOfferings.get(r.nextInt(courseOfferings.size()));
+//			
+//			RegistrationRequest req = new RegistrationRequest();
+//			req.setPriority(r.nextInt(courseOfferings.size()));
+//			req.setStatus(Status.PENDING);
+//			
+//			registrationRequestService.save(req);
+//		}
+//	}
 }
