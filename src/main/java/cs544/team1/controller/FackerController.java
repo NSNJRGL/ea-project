@@ -13,33 +13,36 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
 @RequestMapping("/faker")
 public class FackerController {
 
-    @Autowired
-     IAcademicBlockService academicBlockService;
+	@Autowired
+	IAcademicBlockService academicBlockService;
 
-    @Autowired
-    IStudentService studentService;
+	@Autowired
+	IStudentService studentService;
 
-    @Autowired
-    IFacultyService facultyService;
+	@Autowired
+	IFacultyService facultyService;
 
-    @Autowired
-    IAdminService adminService;
+	@Autowired
+	IAdminService adminService;
 
-    @Autowired
-    IRegistrationEventService registrationEventService;
+	@Autowired
+	IRegistrationEventService registrationEventService;
 
-    @Autowired
-    IRegistrationGroupService registrationGroupService;
-    @Autowired
-    ICourseService courseService;
+	@Autowired
+	IRegistrationGroupService registrationGroupService;
+	@Autowired
+	ICourseService courseService;
+	@Autowired
+	ICourseOfferingService courseOfferingService;
 
-    @GetMapping
+	@GetMapping
     public void generateFakerData(){
         fakerAcademicBlock();
         fakerStudent();
@@ -189,4 +192,23 @@ public void fakerRegistrationEvent(){
         }
 
     }
+	
+	public void fakerCourseOffering() {
+
+		List<Course> courses = courseService.findAll();
+		List<Faculty> faculties = facultyService.findAll();
+		List<AcademicBlock> academicBlocks = academicBlockService.findAll();
+		String facultyName = "" + faculties.get(0).getFirstName().charAt(0) + faculties.get(0).getLastName().charAt(0);
+		for(Course course : courses) {
+			String courseCode = course.getCourseCode();
+			CourseOffering courseOffering = new CourseOffering();
+			courseOffering.setCode(courseCode + "-" + academicBlocks.get(0).getCode() + "-" + facultyName );
+			courseOffering.setFaculty(faculties.get(0));
+			courseOffering.setCourse(course);
+			courseOffering.setBlock(academicBlocks.get(0));
+			courseOffering.setCapacity(40);
+			
+			courseOfferingService.save(courseOffering);
+		}
+	}
 }
