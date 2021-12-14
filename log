@@ -11713,3 +11713,24 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'ea-project.student' doesn't 
 2021-12-13 15:21:35.088  INFO 16072 --- [http-nio-8182-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-12-13 15:21:35.088  INFO 16072 --- [http-nio-8182-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2021-12-13 15:21:35.090  INFO 16072 --- [http-nio-8182-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2021-12-13 16:28:38.291  INFO 16072 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-12-13 16:28:38.301  INFO 16072 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-12-13 16:28:38.642  INFO 16072 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-12-13 16:28:38.650  INFO 16072 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2021-12-13 17:53:55.845  INFO 15485 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-12-13 17:53:55.863  INFO 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2021-12-13 17:53:55.880 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table Admin drop foreign key FKf6q87ub700j48q674r11q57e9
+2021-12-13 17:53:55.882 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table CourseOffering drop foreign key FKj52aam7t5u7b9es82sflsv8yf
+2021-12-13 17:53:55.886 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table CourseOffering drop foreign key FK9546x4fkb5eat4pm15ognxvdd
+2021-12-13 17:53:55.887 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table CourseOffering drop foreign key FKmejtocb0qskv7gcvjkoibxuei
+2021-12-13 17:53:55.891 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table Faculty drop foreign key FKmjipb8roamp147iwf5onc3fof
+2021-12-13 17:53:55.893 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table Registration drop foreign key FKeb2bnppytukjyrylpvnfxto1r
+2021-12-13 17:53:55.895 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table Registration drop foreign key FKpr7wc8w4cytwjml9aur91d63c
+2021-12-13 17:53:55.897 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table RegistrationEvent drop foreign key FK156cv0jpdg6lkpyah5gm4lh9m
+2021-12-13 17:53:55.899 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table RegistrationGroup_AcademicBlock drop foreign key FKpnljp08k942ueo8f473iotyi9
+2021-12-13 17:53:55.900 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table RegistrationGroup_AcademicBlock drop foreign key FK4wwgagpebmsgkfoxy1dqnohjg
+2021-12-13 17:53:55.902 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table RegistrationRequest drop foreign key FK3vvgxc5dns0y5wmkh36udbjxa
+2021-12-13 17:53:55.903 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table RegistrationRequest drop foreign key FK1e4mscj2s3nu1y2jjtqqspfyg
+2021-12-13 17:53:55.904 ERROR 15485 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000478: Unsuccessful: alter table Student drop foreign key FK3bkmp4kohbl54m14tb2fcqya3
+2021-12-13 17:53:55.940  INFO 15485 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-12-13 17:53:55.959  INFO 15485 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
