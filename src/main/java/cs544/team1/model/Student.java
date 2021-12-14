@@ -29,6 +29,7 @@ public class Student extends Person {
 	@JoinColumn(name="student_id")
 	private List<Registration> registrations = new ArrayList<>();
 
+
 	@OneToMany
 	@JoinColumn(name="student_id")
 	private List<RegistrationRequest> registrationsRequests = new ArrayList<>();

@@ -1,11 +1,9 @@
 package cs544.team1.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +23,12 @@ public class RegistrationEvent {
 	private long id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
+
+	@ManyToMany(mappedBy ="registrationEvents")
+	private List<RegistrationGroup> registrationGroups;
+
+
+
 	@Embedded
 	private Audit audit;
 }
