@@ -19,12 +19,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RegistrationEvent {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 
-	@ManyToMany(mappedBy ="registrationEvents")
+	@ManyToMany(mappedBy ="registrationEvents",cascade = {CascadeType.ALL,CascadeType.PERSIST})
 	private List<RegistrationGroup> registrationGroups;
 
 
