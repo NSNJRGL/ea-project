@@ -56,7 +56,7 @@ public class FackerController {
         fakerRegistrationGroup();
         fakerRegistrationEvent();
         fakerCourse();
-
+        fakerCourseOffering();
 
     }
     public void fakerRegistrationGroup() {
