@@ -236,20 +236,4 @@ public void fakerRegistrationEvent(){
 			courseOfferingService.save(courseOffering);
 		}
 	}
-
-//	public void fakerRegistrationRequest() {
-//		List<Student> students = studentService.findAll();
-//		List<CourseOffering> courseOfferings = courseOfferingService.findAll();
-//		
-//		for(Student student : students) {
-//			Random r = new Random();
-//			courseOfferings.get(r.nextInt(courseOfferings.size()));
-//			
-//			RegistrationRequest req = new RegistrationRequest();
-//			req.setPriority(r.nextInt(courseOfferings.size()));
-//			req.setStatus(Status.PENDING);
-//			
-//			registrationRequestService.save(req);
-//		}
-//	}
 }
