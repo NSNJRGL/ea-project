@@ -40,11 +40,7 @@ public class AcademincBlockSericeImpl implements  IAcademicBlockService{
 
     @Override
     public List<AcademicBlock> findAll() {
-        List<AcademicBlock> list= new ArrayList<>();
-        Audit a= new Audit();
-        return list;
-
-
+        return repository.findAll();
     }
 
 }
