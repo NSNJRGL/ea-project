@@ -23,7 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Person {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String firstName;
 	private String lastName;
@@ -49,4 +49,7 @@ public class Person {
 	private String phoneNumber;
 	@Email
 	private String email;
+
+	private String username;
+	private String password;
 }
