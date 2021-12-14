@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,17 +22,24 @@ import lombok.ToString;
 @Entity
 public class RegistrationGroup {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String code;
     @OneToMany
     private List<AcademicBlock> academicBlocks = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "group_id")
+    //@OneToMany(mappedBy = "group")
+    @Transient
     private List<Student> students= new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(   cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            },
+            fetch = FetchType.EAGER)
     @JoinTable(
             name = "registration_group_event",
             joinColumns = {@JoinColumn(name = "group_id")},

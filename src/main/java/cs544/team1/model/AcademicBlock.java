@@ -14,7 +14,8 @@ import java.util.List;
 @ToString
 public class AcademicBlock{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
     @Column(nullable = false)
     private String code;
