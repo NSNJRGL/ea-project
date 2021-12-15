@@ -13,7 +13,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class RegistrationRequest {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int priority;
     @Enumerated(EnumType.STRING)
