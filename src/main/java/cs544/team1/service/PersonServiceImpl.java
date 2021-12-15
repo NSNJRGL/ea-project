@@ -44,6 +44,11 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
+    public void deleteById(int id){
+
+    }
+
+    @Override
     public Person loginByUserName(String username) {
         System.out.println("MEthod=" + this.getClass().getName() + " --Loginwith username");
         Person p = repository.loginWithUserName(username);

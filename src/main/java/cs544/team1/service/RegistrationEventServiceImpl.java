@@ -12,11 +12,11 @@ import java.util.Optional;
 @Service
 public class RegistrationEventServiceImpl implements IRegistrationEventService  {
 
-    private SessionFactory sf;
-
-    public void setSessionFactory(SessionFactory sf) {
-        this.sf = sf;
-    }
+//    private SessionFactory sf;
+//
+//    public void setSessionFactory(SessionFactory sf) {
+//        this.sf = sf;
+//    }
 
     @Autowired
     RegistrationEventRepository repository;
@@ -52,4 +52,26 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
+
+    @Override
+    public RegistrationEvent updateEvent(RegistrationEvent event,int id) {
+        RegistrationEvent entity = (RegistrationEvent) findById(id).orElse(null);
+        assert entity != null;
+        entity.setStartDate(event.getStartDate());
+        entity.setEndDate(event.getEndDate());
+
+        return repository.save(entity);
+    }
+
+    @Override
+    public RegistrationEvent findFirstEvent(){
+        return repository.findFirstByOrderByStartDateDesc();
+    }
+
+
 }

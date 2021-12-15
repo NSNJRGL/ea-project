@@ -44,6 +44,11 @@ public class RegistrationRequestServiceImpl implements IRegistrationRequestServi
 
     }
 
+    @Override
+    public void deleteById(int id){
+
+    }
+
 	@Override
 	public List<RegistrationRequestProjection> findByStudentId(long studentId) {
 		return repository.findByStudentId(studentId);

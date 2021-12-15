@@ -39,6 +39,11 @@ public class AcademincBlockSericeImpl implements  IAcademicBlockService{
     }
 
     @Override
+    public void deleteById(int id){
+
+    }
+
+    @Override
     public List<AcademicBlock> findAll() {
         return repository.findAll();
     }

@@ -26,4 +26,8 @@ public interface RegistrationEventRepository extends JpaRepository<RegistrationE
 //            "join rg.students s where s.studentId = :studentid")
     public List<RegistrationEvent> getLatestRegistationEvents(@Param("id") String id);
 
+
+
+    RegistrationEvent findFirstByOrderByStartDateDesc();
+
 }
