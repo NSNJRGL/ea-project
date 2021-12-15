@@ -2,9 +2,9 @@ package cs544.team1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,31 +22,37 @@ import lombok.ToString;
 @Entity
 public class RegistrationGroup {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String code;
-    @OneToMany
-    private List<AcademicBlock> academicBlocks = new ArrayList<>();
 
-    //@OneToMany(mappedBy = "group")
-    @Transient
-    private List<Student> students= new ArrayList<>();
+    @OneToMany(targetEntity=AcademicBlock.class,cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    //@JoinColumn(name = "Reg_Group_ID")
+    private List<AcademicBlock> academicBlocks;
 
-    @ManyToMany(   cascade =
-            {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            },
+    @OneToMany(targetEntity=Student.class,cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "registration_group_event",
-            joinColumns = {@JoinColumn(name = "group_id")},
-            inverseJoinColumns = { @JoinColumn(name = "event_id")}
+    //@JoinColumn(name = "Reg_Group_ID")
+    private List<Student> students = new ArrayList<>();
 
-    )
-    private List<RegistrationEvent>registrationEvents;
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "registration_group_event",
+//            joinColumns = {@JoinColumn(name = "group_id")},
+//            inverseJoinColumns = { @JoinColumn(name = "event_id")}
+//
+//    )
+ //   private List<RegistrationEvent>registrationEvents ;
     @Embedded
     private Audit audit;
+
+    public void addAcademicBlock(AcademicBlock block) {
+        academicBlocks.add(block);
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
 }

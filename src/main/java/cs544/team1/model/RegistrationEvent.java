@@ -1,6 +1,7 @@
 package cs544.team1.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,15 +20,17 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RegistrationEvent {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 
-	@ManyToMany(mappedBy ="registrationEvents",cascade = {CascadeType.ALL,CascadeType.PERSIST})
-	private List<RegistrationGroup> registrationGroups;
-
-
+	@OneToMany(targetEntity=RegistrationGroup.class,cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY, orphanRemoval = true)
+	//@JoinTable(name="RegEvent_RegGroup")
+	@JoinColumn(name="Reg_Event_ID")
+	//@OrderColumn(name="sequence")
+	private List<RegistrationGroup> registrationGroups = new ArrayList<>();
 
 	@Embedded
 	private Audit audit;

@@ -1,8 +1,11 @@
 package cs544.team1.service;
 
+import cs544.team1.model.RegistrationEvent;
+import cs544.team1.model.RegistrationRequest;
 import cs544.team1.model.Student;
 import cs544.team1.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +30,12 @@ public class StudentServiceImpl implements IStudentService  {
     public Optional findById(int id) {
         return repository.findById(id);
     }
+//    @Override
+//    public List<Student> getStudentsByGroupID(long id){
+//        return repository.getStudentsByGroupID(id);
+//        //return repository.findStudentsByGroupId(id);
+//    }
+
 
     @Override
     public Long count() {
