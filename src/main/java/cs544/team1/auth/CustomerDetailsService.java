@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 
 @Service
-public class CustomerDetailsService implements UserDetailsService {
+public class CustomerDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     @Autowired
     IPersonService personService;
 

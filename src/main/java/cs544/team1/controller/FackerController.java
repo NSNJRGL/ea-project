@@ -1,6 +1,7 @@
 package cs544.team1.controller;
 
 import com.github.javafaker.Faker;
+import cs544.team1.auth.SystemRole;
 import cs544.team1.model.*;
 import cs544.team1.service.*;
 import cs544.team1.auth.SHAHash;
@@ -44,6 +45,12 @@ public class FackerController {
 	@Autowired
 	ICourseOfferingService courseOfferingService;
 
+	@Autowired
+	IOperationService operationService;
+
+	@Autowired
+	IResourceService resourceService;
+
 	@GetMapping
 	public void generateFakerData() {
 		fakerAcademicBlock();
@@ -55,9 +62,63 @@ public class FackerController {
 		fakerRegistrationEvent();
 		fakerCourse();
 		fakerCourseOffering();
+		fakerResource();
+		fakerOperation();
 
 	}
+	public void fakerResource(){
+		Resource resource= new Resource();
+		resource.setName("Get Okay");
+		resource.setPath("/api/ok");
+		resourceService.save(resource);
 
+		Resource r1= new Resource();
+		r1.setName("Cources");
+		r1.setPath("/api/courses");
+
+		resourceService.save(r1);
+
+		Resource r2= new Resource();
+		r2.setName("Get Blocks");
+
+		r2.setPath("/api/blocks");
+		resourceService.save(r2);
+	}
+
+	public void fakerOperation(){
+		List<Resource> resources= resourceService.findAll();
+		for (Resource resource: resources){
+			 Operation operation= new Operation();
+			 operation.setResource(resource);
+			 operation.setRole(RoleNames.Admin.toString());
+			 operation.setCanGET(true);
+			 operation.setCanPUT(true);
+			 operation.setCanDELETE(true);
+			 operation.setCanPOST(true);
+			 operationService.save(operation);
+	 	}
+		for (Resource resource: resources){
+			Operation operation= new Operation();
+			operation.setResource(resource);
+			operation.setRole(RoleNames.Faculty.toString());
+			operation.setCanGET(true);
+			operation.setCanPUT(true);
+			operation.setCanDELETE(false);
+			operation.setCanPOST(true);
+			operationService.save(operation);
+		}
+		for (Resource resource: resources){
+			Operation operation= new Operation();
+			operation.setResource(resource);
+			operation.setRole(RoleNames.Student.toString());
+			operation.setCanGET(true);
+			operation.setCanPUT(false);
+			operation.setCanDELETE(false);
+			operation.setCanPOST(false);
+			operationService.save(operation);
+		}
+
+	}
 	public void fakerRegistrationGroup() {
 		String[] entry = { "FEB", "MAY", "AUG", "NOV" };
 		for (int i = 0; i < 3; i++) {

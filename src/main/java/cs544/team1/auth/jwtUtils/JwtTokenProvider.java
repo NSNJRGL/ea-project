@@ -27,7 +27,14 @@ import java.util.function.Function;
 			return getClaimFromToken(token, Claims::getSubject);
 		}
 
-		//retrieve expiration date from jwt token
+	//retrieve username from jwt token
+	public String getRoleFromToken(String token) {
+		String role = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().get("role", String.class);
+        return  role;
+	}
+
+
+	//retrieve expiration date from jwt token
 		public Date getExpirationDateFromToken(String token) {
 			return getClaimFromToken(token, Claims::getExpiration);
 		}
@@ -50,7 +57,6 @@ import java.util.function.Function;
 		//generate token for user
 		public String generateToken1(UserDetails userDetails) {
 			Map<String, Object> claims = new HashMap<>();
-			//claims.put("role","Faculry");
 			return doGenerateToken(claims, userDetails.getUsername());
 		}
 	public String generateTokenWithRole(UserDetails userDetails,String role) {
