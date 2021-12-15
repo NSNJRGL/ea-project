@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Data
 @Getter
 @Setter
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @EqualsAndHashCode
+@DynamicUpdate
 public class RegistrationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +23,12 @@ public class RegistrationRequest {
     private Status status;
     @Embedded
 	private Audit audit;
+    @ManyToOne
+    private CourseOffering courseOffering;
+    @ManyToOne
+    private Student student;
+    
+    public boolean isPending() {
+    	return status == Status.PENDING;
+    }
 }
