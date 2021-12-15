@@ -27,12 +27,12 @@ public class RegistrationGroup {
     private String code;
 
     @OneToMany(targetEntity=AcademicBlock.class,cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, orphanRemoval = true)
+            fetch = FetchType.LAZY)
     //@JoinColumn(name = "Reg_Group_ID")
-    private Set<AcademicBlock> academicBlocks;
+    private List<AcademicBlock> academicBlocks;
 
     @OneToMany(targetEntity=Student.class,cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER, orphanRemoval = true)
+            fetch = FetchType.EAGER)
     //@JoinColumn(name = "Reg_Group_ID")
     private List<Student> students = new ArrayList<>();
 
@@ -47,4 +47,12 @@ public class RegistrationGroup {
  //   private List<RegistrationEvent>registrationEvents ;
     @Embedded
     private Audit audit;
+
+    public void addAcademicBlock(AcademicBlock block) {
+        academicBlocks.add(block);
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
 }

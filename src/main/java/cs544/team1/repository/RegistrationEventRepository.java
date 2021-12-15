@@ -15,11 +15,15 @@ import java.util.List;
 @Transactional
 public interface RegistrationEventRepository extends JpaRepository<RegistrationEvent,Integer> {
 
-    @Query("select rv from RegistrationEvent rv join rv.registrationGroups rg where rv.id = :id")
+//    @Query("select rv from RegistrationEvent rv join rv.registrationGroups rg " +
+//            "where rg.students.studentId = :id")
+
+    @Query("select rv from RegistrationEvent rv join rv.registrationGroups rg  join rg.students s " +
+            "where s.studentId = :id")
 
 //    @Query("select rv from RegistrationEvent rv join rv.registrationGroups rg " +
 //            "join rg.academicBlocks ab join ab.courseOfferings co " +
 //            "join rg.students s where s.studentId = :studentid")
-    public List<RegistrationEvent> getLatestRegistationEvents(@Param("id") long id);
+    public List<RegistrationEvent> getLatestRegistationEvents(@Param("id") String id);
 
 }

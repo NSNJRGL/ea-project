@@ -28,7 +28,7 @@ public class RegistrationEvent {
 	@OneToMany(targetEntity=RegistrationGroup.class,cascade = CascadeType.ALL,
 			fetch = FetchType.LAZY, orphanRemoval = true)
 	//@JoinTable(name="RegEvent_RegGroup")
-	@JoinColumn(name="Reg_ID")
+	@JoinColumn(name="Reg_Event_ID")
 	//@OrderColumn(name="sequence")
 	private List<RegistrationGroup> registrationGroups = new ArrayList<>();
 

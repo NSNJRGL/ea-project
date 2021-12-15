@@ -22,7 +22,7 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     RegistrationEventRepository repository;
 
 
-    public List<RegistrationEvent> getLatestRegistationEvents(long studentID) {
+    public List<RegistrationEvent> getLatestRegistationEvents(String studentID) {
 
         return repository.getLatestRegistationEvents(studentID);
     }

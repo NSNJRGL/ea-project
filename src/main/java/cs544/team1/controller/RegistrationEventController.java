@@ -21,7 +21,7 @@ public class RegistrationEventController {
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody List<RegistrationEvent> getRegEvent(@PathVariable long id){
+    public @ResponseBody List<RegistrationEvent> getRegEvent(@PathVariable String id){
         return registrationEventService.getLatestRegistationEvents(id);
     }
 }
