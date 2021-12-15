@@ -25,10 +25,9 @@ public class RegistrationEvent {
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 
-	@OneToMany(targetEntity=RegistrationGroup.class,cascade = CascadeType.ALL,
-			fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	//@JoinTable(name="RegEvent_RegGroup")
-	@JoinColumn(name="Reg_Event_ID")
+	@JoinColumn(name="reg_event_id")
 	//@OrderColumn(name="sequence")
 	private List<RegistrationGroup> registrationGroups = new ArrayList<>();
 
