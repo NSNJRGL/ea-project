@@ -1,8 +1,8 @@
 package cs544.team1.service;
 
 import cs544.team1.model.RegistrationEvent;
-import cs544.team1.model.RegistrationRequest;
 import cs544.team1.repository.RegistrationEventRepository;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +11,22 @@ import java.util.Optional;
 
 @Service
 public class RegistrationEventServiceImpl implements IRegistrationEventService  {
+
+    private SessionFactory sf;
+
+    public void setSessionFactory(SessionFactory sf) {
+        this.sf = sf;
+    }
+
     @Autowired
     RegistrationEventRepository repository;
 
-//    @Override
-//    public Optional<RegistrationEvent> getLatestRegistationEvents(Integer id, RegistrationRequest registrationRequest){
-//        Optional<RegistrationEvent> registrationEvent = repository.findById(id);
-//        if(registrationEvent.isPresent()) {
-//            //return registrationEvent.get();
-//        } else {
-//            throw new RecordNotFoundException("No employee record exist for given id");
-//        }
-//    }
+
+    public List<RegistrationEvent> getLatestRegistationEvents(long studentID) {
+
+        return repository.getLatestRegistationEvents(studentID);
+    }
+
 
     @Override
     public List findAll() {

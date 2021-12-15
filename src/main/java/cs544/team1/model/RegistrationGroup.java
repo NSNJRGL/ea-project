@@ -2,6 +2,7 @@ package cs544.team1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -21,24 +22,29 @@ import lombok.ToString;
 @Entity
 public class RegistrationGroup {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String code;
-    @OneToMany
-    private List<AcademicBlock> academicBlocks = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "group_id")
-    private List<Student> students= new ArrayList<>();
+    @OneToMany(targetEntity=AcademicBlock.class,cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true)
+    //@JoinColumn(name = "Reg_Group_ID")
+    private Set<AcademicBlock> academicBlocks;
 
-    @ManyToMany
-    @JoinTable(
-            name = "registration_group_event",
-            joinColumns = {@JoinColumn(name = "group_id")},
-            inverseJoinColumns = { @JoinColumn(name = "event_id")}
+    @OneToMany(targetEntity=Student.class,cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, orphanRemoval = true)
+    //@JoinColumn(name = "Reg_Group_ID")
+    private List<Student> students = new ArrayList<>();
 
-    )
-    private List<RegistrationEvent>registrationEvents;
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "registration_group_event",
+//            joinColumns = {@JoinColumn(name = "group_id")},
+//            inverseJoinColumns = { @JoinColumn(name = "event_id")}
+//
+//    )
+ //   private List<RegistrationEvent>registrationEvents ;
     @Embedded
     private Audit audit;
 }

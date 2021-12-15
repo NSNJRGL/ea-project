@@ -44,27 +44,32 @@ public class FackerController {
 	@GetMapping
 	public void generateFakerData() {
 		fakerAcademicBlock();
-		fakerStudent();
-		fakerFaculty();
-		fakerAdmin();
-		fakerRegistrationEvent();
+
+		//fakerFaculty();
+		//fakerAdmin();
 		fakerRegistrationGroup();
-		fakerCourse();
-		fakerCourseOffering();
+		fakerRegistrationEvent();
+		fakerStudent();
+		fakerAcademicBlock();
+		//fakerRegistrationGroup();
+		//fakerCourse();
+		//fakerCourseOffering();
 	}
 
 	public void fakerRegistrationGroup() {
+		//List<Student> students = studentService.findAll();
 		String[] entry = { "FEB", "MAY", "AUG", "NOV" };
 		for (int i = 0; i < 3; i++) {
 			RegistrationGroup obj = new RegistrationGroup();
 			obj.setCode(entry[i] + LocalDate.now().getYear());
+			//obj.setStudents(students);
 			registrationGroupService.save(obj);
 		}
 	}
 
 	public void fakerCourse() {
-		String[] names = { "Fundamnetal of Progarmming Practice", "Modern Programming Practice",
-				"Enterprise Archtecture", "Software Archttecture", "Algorithms", "Modern Web Application", };
+		String[] names = { "Fundamental of Programming Practice", "Modern Programming Practice",
+				"Enterprise Architecture", "Software Architecture", "Algorithms", "Modern Web Application", };
 		String[] codes = { "CS390", "CS400", "CS544", "CS577", "CS425", "CS572", };
 		for (int i = 0; i < 6; i++) {
 			Course course = new Course();
@@ -76,19 +81,24 @@ public class FackerController {
 	}
 
 	public void fakerRegistrationEvent() {
+		List<RegistrationGroup> groups = registrationGroupService.findAll();
 		Faker faker = new Faker();
+		System.out.println(groups.toString());
 		for (int i = 1; i < 5; i++) {
+			System.out.println(i);
 			RegistrationEvent obj = new RegistrationEvent();
 			obj.setStartDate(LocalDateTime.now());
 			obj.setEndDate(LocalDateTime.now().plusDays(10));
+			obj.setRegistrationGroups(groups);
 			registrationEventService.save(obj);
 		}
-		for (int i = 1; i < 5; i++) {
-			RegistrationEvent obj = new RegistrationEvent();
-			obj.setStartDate(LocalDateTime.now().plusDays(10));
-			obj.setEndDate(LocalDateTime.now().plusDays(15));
-			registrationEventService.save(obj);
-		}
+//		for (int i = 1; i < 5; i++) {
+//			RegistrationEvent obj = new RegistrationEvent();
+//			obj.setStartDate(LocalDateTime.now().plusDays(10));
+//			obj.setEndDate(LocalDateTime.now().plusDays(15));
+//			obj.setRegistrationGroups(groups);
+//			registrationEventService.save(obj);
+//		}
 
 	}
 
@@ -106,14 +116,17 @@ public class FackerController {
 	}
 
 	public void fakerStudent() {
+		List<RegistrationGroup> groups = registrationGroupService.findAll();
+
 		Faker faker = new Faker();
-		for (int i = 100; i < 600; i++) {
+		for (int i = 100; i < 200; i++) {
 			Student student = new Student();
 			student.setFirstName(faker.address().firstName());
 			student.setLastName(faker.address().lastName());
 			student.setStudentId("61-21" + i);
 			AcademicBlock academicBlock = new AcademicBlock();
 			academicBlock.setId(4 % i);
+			//student.setGroup(groups.get((i%2)+1));
 			student.setEmail(faker.bothify("????##@gmail.com"));
 			studentService.save(student);
 		}
