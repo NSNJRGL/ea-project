@@ -1,4 +1,4 @@
-package com.miu.excercise15springdatajpa.model.modelResponses;
+package cs544.team1.auth.modelResponses;
 
 import lombok.*;
 
@@ -9,5 +9,4 @@ import lombok.*;
 @AllArgsConstructor
 public class JwtResponse {
 	private   String token;
-
 }

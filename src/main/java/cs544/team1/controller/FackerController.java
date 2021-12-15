@@ -3,7 +3,7 @@ package cs544.team1.controller;
 import com.github.javafaker.Faker;
 import cs544.team1.model.*;
 import cs544.team1.service.*;
-import cs544.team1.utils.PasswordUtil;
+import cs544.team1.auth.SHAHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -109,8 +107,8 @@ public class FackerController {
 			String lname = faker.name().lastName();
 			obj.setFirstName(fname);
 			obj.setLastName(lname);
-			obj.setUsername(fname.toLowerCase().substring(1, 1) + lname.toLowerCase());
-			obj.setPassword(PasswordUtil.decode(fname));
+			obj.setUsername(fname);
+			obj.setPassword(SHAHash.getSHA256(fname));
 
 			obj.setPosition("Registrar Manager");
 			obj.setAdminId("ADM-21" + i);
@@ -124,12 +122,12 @@ public class FackerController {
 		for (int i = 100; i < 200; i++) {
 
 			Student student = new Student();
-			String fname = faker.name().firstName();
-			String lname = faker.name().lastName();
+			String fname = faker.name().firstName().trim();
+			String lname = faker.name().lastName().trim();
 			student.setFirstName(fname);
 			student.setLastName(lname);
-			student.setUsername(fname.toLowerCase().subSequence(1, 1) + lname.toLowerCase());
-			student.setPassword(PasswordUtil.decode(fname));
+			student.setUsername( fname);
+			student.setPassword(SHAHash.getSHA256(fname));
 
 			student.setStudentId("61-21" + i);
 			AcademicBlock academicBlock = new AcademicBlock();
@@ -149,12 +147,12 @@ public class FackerController {
 
 		for (int i = 10; i < 15; i++) {
 			Faculty faculty = new Faculty();
-			String fname = faker.name().firstName();
-			String lname = faker.name().lastName();
+			String fname = faker.name().firstName().trim();
+			String lname = faker.name().lastName().trim();
 			faculty.setFirstName(fname);
 			faculty.setLastName(lname);
-			faculty.setUsername(fname.toLowerCase().subSequence(1, 1) + lname.toLowerCase());
-			faculty.setPassword(PasswordUtil.decode(fname));
+			faculty.setUsername(fname);
+			faculty.setPassword(SHAHash.getSHA256(fname));
 
 			faculty.setFacultyId("21" + i);
 			faculty.setTitle("Professor");

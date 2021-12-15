@@ -1,7 +1,7 @@
-package com.miu.excercise15springdatajpa.security;
+package cs544.team1.auth;
 
- import com.miu.excercise15springdatajpa.jwtUtils.TokenRequestFilter;
- import org.springframework.beans.factory.annotation.Autowired;
+import cs544.team1.auth.jwtUtils.TokenRequestFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		// We don't need CSRF for this example
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/","/api/login","/test").permitAll().
+				.authorizeRequests().antMatchers("/","/api/login","/faker").permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

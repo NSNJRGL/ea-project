@@ -1,4 +1,4 @@
-package com.miu.excercise15springdatajpa.jwtUtils;
+package cs544.team1.auth.jwtUtils;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;

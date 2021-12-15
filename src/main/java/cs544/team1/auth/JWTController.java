@@ -1,10 +1,11 @@
-package com.miu.excercise15springdatajpa.controller;
+package cs544.team1.auth;
 
 
-import com.miu.excercise15springdatajpa.jwtUtils.JwtTokenProvider;
-import com.miu.excercise15springdatajpa.model.modelRequests.LoginRequest;
-import com.miu.excercise15springdatajpa.model.modelResponses.CustomerResponse;
-import com.miu.excercise15springdatajpa.model.modelResponses.JwtResponse;
+import cs544.team1.auth.jwtUtils.JwtTokenProvider;
+import cs544.team1.auth.modelRequests.LoginRequest;
+import cs544.team1.auth.modelResponses.JwtResponse;
+import cs544.team1.model.Person;
+import cs544.team1.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 
 @RestController
 //@CrossOrigin
 @RequestMapping("/api/")
-public class CustomerController {
+public class JWTController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -32,6 +31,8 @@ public class CustomerController {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	@Autowired
+	private IPersonService personService;
 	
 	@GetMapping("/ok")
 	public String testing(){
@@ -42,16 +43,33 @@ public class CustomerController {
 	@PostMapping("login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest) throws Exception {
 
-		//final ResponseEntity<String> response = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		 final ResponseEntity<String> response = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		System.out.println(authenticationRequest.getUsername());
+		System.out.println(authenticationRequest.getPassword());
+		System.out.println("_<_<_<_<_<_<_<_<_<_<_<_<___<_<");
 
+		Person person= personService.loginByUserName(authenticationRequest.getUsername());
+		System.out.println("---------------------");
+		System.out.println(person.toString());
+
+		System.out.println("-----------------------");
+		System.out.println();
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
+//		System.out.println("============");
+		System.out.println(SHAHash.getSHA256(authenticationRequest.getPassword()));
+		if (userDetails.getPassword().equals(SHAHash.getSHA256(authenticationRequest.getPassword()))){
+String role=SystemRole.getRole(person);
+			final String token = jwtTokenProvider.generateTokenWithRole(userDetails,role);
+			System.out.println("token=="+token);
+			return ResponseEntity.ok(new JwtResponse(token));
+		}else
+		{
+			return ResponseEntity.status(401).body("Un Authorised");
+		}
 
-		final String token = jwtTokenProvider.generateToken(userDetails);
-		System.out.println("token=="+token);
-		return ResponseEntity.ok(new JwtResponse(token));
 	}
-	
+
 
 
 	private ResponseEntity<String> authenticate(String username, String password) throws Exception {

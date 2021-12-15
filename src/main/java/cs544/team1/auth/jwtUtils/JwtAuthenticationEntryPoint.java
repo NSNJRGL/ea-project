@@ -1,5 +1,5 @@
 
-  package com.miu.excercise15springdatajpa.jwtUtils;
+  package cs544.team1.auth.jwtUtils;
 
   import org.springframework.security.core.AuthenticationException;
   import org.springframework.security.web.AuthenticationEntryPoint;
@@ -13,14 +13,13 @@
 
   @Component
   public class JwtAuthenticationEntryPoint implements
-  AuthenticationEntryPoint {
+          AuthenticationEntryPoint {
   
   @Override
   public void commence(HttpServletRequest request,
   HttpServletResponse response, AuthenticationException authException) throws
   IOException, ServletException {
-  response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-  "hi bro you're not allowed");
+  response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "hi bro you're not allowed");
   
   }
   

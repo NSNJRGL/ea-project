@@ -1,4 +1,4 @@
-package com.miu.excercise15springdatajpa.model.modelRequests;
+package cs544.team1.auth.modelRequests;
 
 import lombok.*;
 

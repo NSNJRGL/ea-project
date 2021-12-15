@@ -1,4 +1,4 @@
-package com.miu.excercise15springdatajpa.jwtUtils;
+package cs544.team1.auth.jwtUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -48,11 +48,16 @@ import java.util.function.Function;
 		}
 
 		//generate token for user
-		public String generateToken(UserDetails userDetails) {
+		public String generateToken1(UserDetails userDetails) {
 			Map<String, Object> claims = new HashMap<>();
-			claims.put("role","Faculry");
+			//claims.put("role","Faculry");
 			return doGenerateToken(claims, userDetails.getUsername());
 		}
+	public String generateTokenWithRole(UserDetails userDetails,String role) {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("role",role);
+		return doGenerateToken(claims, userDetails.getUsername());
+	}
 
 		//while creating the token -
 		//1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
