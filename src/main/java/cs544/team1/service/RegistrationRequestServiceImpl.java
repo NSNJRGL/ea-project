@@ -1,6 +1,8 @@
 package cs544.team1.service;
 
 import cs544.team1.model.RegistrationRequest;
+import cs544.team1.model.Student;
+import cs544.team1.projection.RegistrationRequestProjection;
 import cs544.team1.repository.RegistrationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,13 @@ import java.util.Optional;
 public class RegistrationRequestServiceImpl implements IRegistrationRequestService  {
     @Autowired
     RegistrationRequestRepository repository;
+    
+    public List<RegistrationRequest> findByStatus(String status) {
+    	return repository.findByStatus(status);
+    }
 
     @Override
-    public List findAll() {
+    public List<RegistrationRequest> findAll() {
         return repository.findAll();
     }
 
@@ -24,9 +30,8 @@ public class RegistrationRequestServiceImpl implements IRegistrationRequestServi
     }
 
     @Override
-    public Optional findById(int id) {
-        return
-               repository.findById(id);
+    public Optional<RegistrationRequest> findById(int id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -38,4 +43,10 @@ public class RegistrationRequestServiceImpl implements IRegistrationRequestServi
     public void delete(int id) {
 
     }
+
+	@Override
+	public List<RegistrationRequestProjection> findByStudentId(long studentId) {
+		return repository.findByStudentId(studentId);
+	}
+    
 }

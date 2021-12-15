@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Entity
 public class CourseOffering {
     @Id
-    @GeneratedValue
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
     private String code;
     @OneToOne
@@ -32,9 +33,9 @@ public class CourseOffering {
     @JoinColumn(name="course_offering_id")
 	private List<Registration> registrations = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name="course_offering_id")
-    private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn(name="course_offering_id")
+//    private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
 
     @Embedded
 	private Audit audit;

@@ -1,8 +1,10 @@
 package cs544.team1.controller;
 
 import com.github.javafaker.Faker;
+import cs544.team1.auth.SystemRole;
 import cs544.team1.model.*;
 import cs544.team1.service.*;
+import cs544.team1.auth.SHAHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -35,11 +36,20 @@ public class FackerController {
 	IRegistrationEventService registrationEventService;
 
 	@Autowired
+	IRegistrationRequestService registrationRequestService;
+
+	@Autowired
 	IRegistrationGroupService registrationGroupService;
 	@Autowired
 	ICourseService courseService;
 	@Autowired
 	ICourseOfferingService courseOfferingService;
+
+	@Autowired
+	IOperationService operationService;
+
+	@Autowired
+	IResourceService resourceService;
 
 	@GetMapping
 	public void generateFakerData() {
@@ -47,12 +57,68 @@ public class FackerController {
 		fakerStudent();
 		fakerFaculty();
 		fakerAdmin();
-		fakerRegistrationEvent();
+
 		fakerRegistrationGroup();
+		fakerRegistrationEvent();
 		fakerCourse();
 		fakerCourseOffering();
+		fakerResource();
+		fakerOperation();
+
+	}
+	public void fakerResource(){
+		Resource resource= new Resource();
+		resource.setName("Get Okay");
+		resource.setPath("/api/ok");
+		resourceService.save(resource);
+
+		Resource r1= new Resource();
+		r1.setName("Cources");
+		r1.setPath("/api/courses");
+
+		resourceService.save(r1);
+
+		Resource r2= new Resource();
+		r2.setName("Get Blocks");
+
+		r2.setPath("/api/blocks");
+		resourceService.save(r2);
 	}
 
+	public void fakerOperation(){
+		List<Resource> resources= resourceService.findAll();
+		for (Resource resource: resources){
+			 Operation operation= new Operation();
+			 operation.setResource(resource);
+			 operation.setRole(RoleNames.Admin.toString());
+			 operation.setCanGET(true);
+			 operation.setCanPUT(true);
+			 operation.setCanDELETE(true);
+			 operation.setCanPOST(true);
+			 operationService.save(operation);
+	 	}
+		for (Resource resource: resources){
+			Operation operation= new Operation();
+			operation.setResource(resource);
+			operation.setRole(RoleNames.Faculty.toString());
+			operation.setCanGET(true);
+			operation.setCanPUT(true);
+			operation.setCanDELETE(false);
+			operation.setCanPOST(true);
+			operationService.save(operation);
+		}
+		for (Resource resource: resources){
+			Operation operation= new Operation();
+			operation.setResource(resource);
+			operation.setRole(RoleNames.Student.toString());
+			operation.setCanGET(true);
+			operation.setCanPUT(false);
+			operation.setCanDELETE(false);
+			operation.setCanPOST(false);
+			operationService.save(operation);
+		}
+
+	}
 	public void fakerRegistrationGroup() {
 		String[] entry = { "FEB", "MAY", "AUG", "NOV" };
 		for (int i = 0; i < 3; i++) {
@@ -76,28 +142,35 @@ public class FackerController {
 	}
 
 	public void fakerRegistrationEvent() {
+		List<RegistrationGroup> groups = registrationGroupService.findAll();
 		Faker faker = new Faker();
 		for (int i = 1; i < 5; i++) {
 			RegistrationEvent obj = new RegistrationEvent();
 			obj.setStartDate(LocalDateTime.now());
 			obj.setEndDate(LocalDateTime.now().plusDays(10));
+			obj.setRegistrationGroups(groups);
 			registrationEventService.save(obj);
 		}
 		for (int i = 1; i < 5; i++) {
 			RegistrationEvent obj = new RegistrationEvent();
 			obj.setStartDate(LocalDateTime.now().plusDays(10));
 			obj.setEndDate(LocalDateTime.now().plusDays(15));
+			obj.setRegistrationGroups(groups);
 			registrationEventService.save(obj);
 		}
-
 	}
 
 	public void fakerAdmin() {
 		Faker faker = new Faker();
 		for (int i = 1; i < 5; i++) {
 			Admin obj = new Admin();
-			obj.setFirstName(faker.address().firstName());
-			obj.setLastName(faker.address().lastName());
+			String fname = faker.name().firstName();
+			String lname = faker.name().lastName();
+			obj.setFirstName(fname);
+			obj.setLastName(lname);
+			obj.setUsername(fname);
+			obj.setPassword(SHAHash.getSHA256(fname));
+
 			obj.setPosition("Registrar Manager");
 			obj.setAdminId("ADM-21" + i);
 			obj.setEmail(faker.bothify("????##@gmail.com"));
@@ -107,13 +180,23 @@ public class FackerController {
 
 	public void fakerStudent() {
 		Faker faker = new Faker();
-		for (int i = 100; i < 600; i++) {
+		for (int i = 100; i < 200; i++) {
+
 			Student student = new Student();
-			student.setFirstName(faker.address().firstName());
-			student.setLastName(faker.address().lastName());
+			String fname = faker.name().firstName().trim();
+			String lname = faker.name().lastName().trim();
+			student.setFirstName(fname);
+			student.setLastName(lname);
+			student.setUsername( fname);
+			student.setPassword(SHAHash.getSHA256(fname));
+
 			student.setStudentId("61-21" + i);
 			AcademicBlock academicBlock = new AcademicBlock();
 			academicBlock.setId(4 % i);
+			RegistrationGroup group = new RegistrationGroup();
+			group.setId(3);
+
+			// student.setGroup(group);
 			student.setEmail(faker.bothify("????##@gmail.com"));
 			studentService.save(student);
 		}
@@ -125,8 +208,13 @@ public class FackerController {
 
 		for (int i = 10; i < 15; i++) {
 			Faculty faculty = new Faculty();
-			faculty.setFirstName(faker.address().firstName());
-			faculty.setLastName(faker.address().lastName());
+			String fname = faker.name().firstName().trim();
+			String lname = faker.name().lastName().trim();
+			faculty.setFirstName(fname);
+			faculty.setLastName(lname);
+			faculty.setUsername(fname);
+			faculty.setPassword(SHAHash.getSHA256(fname));
+
 			faculty.setFacultyId("21" + i);
 			faculty.setTitle("Professor");
 			faculty.setEmail(faker.bothify("????##@gmail.com"));
@@ -141,32 +229,52 @@ public class FackerController {
 			String code = faker.regexify("AB-" + i);
 			String name = faker.expression("EXP-");
 			AcademicBlock academicBlock = new AcademicBlock();
-			academicBlock.setCode("2021-12A-12D");
+			academicBlock.setCode(blocks[i]);
 			academicBlock.setName("ACadamic Block " + blocks[i]);
-			academicBlock.setEndDate(LocalDate.of(2021, 12, 28));
-			academicBlock.setStartDate(LocalDate.of(2021, 12, 1));
+			academicBlock.setEndDate(LocalDate.now());
+			academicBlock.setStartDate(LocalDate.now());
 			academicBlock.setSemester(Semester.SPRING);
 
 			academicBlockService.save(academicBlock);
+
 		}
+
 	}
-	
+
 	public void fakerCourseOffering() {
 
 		List<Course> courses = courseService.findAll();
 		List<Faculty> faculties = facultyService.findAll();
 		List<AcademicBlock> academicBlocks = academicBlockService.findAll();
-		String facultyName = "" + faculties.get(0).getFirstName().charAt(0) + faculties.get(0).getLastName().charAt(0);
-		for(Course course : courses) {
+		List<Student> students = studentService.findAll();
+
+		int i = 0;
+		for (Course course : courses) {
+			Random r = new Random();
+			int facultyRandom = r.nextInt(faculties.size());
+			int academicRandom = r.nextInt(academicBlocks.size());
+			String facultyName = "" + faculties.get(facultyRandom).getFirstName().charAt(0)
+					+ faculties.get(facultyRandom).getLastName().charAt(0);
 			String courseCode = course.getCourseCode();
 			CourseOffering courseOffering = new CourseOffering();
-			courseOffering.setCode(courseCode + "-" + academicBlocks.get(0).getCode() + "-" + facultyName );
-			courseOffering.setFaculty(faculties.get(0));
+			courseOffering.setCode(courseCode + "-" + academicBlocks.get(academicRandom).getCode() + "-" + facultyName);
+			courseOffering.setFaculty(faculties.get(facultyRandom));
 			courseOffering.setCourse(course);
-			courseOffering.setBlock(academicBlocks.get(0));
+			courseOffering.setBlock(academicBlocks.get(academicRandom));
 			courseOffering.setCapacity(40);
-			
+			List<RegistrationRequest> registReq = new ArrayList<>();
+			i++;
 			courseOfferingService.save(courseOffering);
+
+			for (Student student : students) {
+				RegistrationRequest req = new RegistrationRequest();
+				req.setPriority(i);
+				req.setStatus(Status.PENDING);
+				req.setCourseOffering(courseOffering);
+				req.setStudent(student);
+
+				registrationRequestService.save(req);
+			}
 		}
 	}
 }

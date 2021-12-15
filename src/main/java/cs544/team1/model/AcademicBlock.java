@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,8 @@ import java.util.List;
 @ToString
 public class AcademicBlock{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
     @Column(nullable = false)
     private String code;
@@ -27,9 +29,8 @@ public class AcademicBlock{
     @Enumerated(EnumType.STRING)
     private Semester semester;
 
-
-    @OneToMany(mappedBy = "block")
-    private List<CourseOffering> courseOfferings;
+    @OneToMany
+    private List<CourseOffering> courseOfferings = new ArrayList<>();
 
     @Embedded
 	private Audit audit;
