@@ -47,12 +47,4 @@ public class RegistrationGroup {
  //   private List<RegistrationEvent>registrationEvents ;
     @Embedded
     private Audit audit;
-
-    public void addAcademicBlock(AcademicBlock block) {
-        academicBlocks.add(block);
-    }
-
-    public void addStudent(Student student) {
-        students.add(student);
-    }
 }
