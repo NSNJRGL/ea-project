@@ -28,13 +28,6 @@ public class Student extends Person {
 	@JoinColumn(name="group_id")
 	private  RegistrationGroup group;
 
-	@OneToMany
-	@JoinColumn(name="student_id")
-	private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
 	@Embedded
 	private Audit audit;
-	
-	public void addRegistrationReq(RegistrationRequest req) {
-		registrationsRequests.add(req);
-	}
 }

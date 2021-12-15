@@ -205,21 +205,17 @@ public class FackerController {
 			courseOffering.setCapacity(40);
 			List<RegistrationRequest> registReq = new ArrayList<>();
 			i++;
+			courseOfferingService.save(courseOffering);
 
 			for (Student student : students) {
 				RegistrationRequest req = new RegistrationRequest();
 				req.setPriority(i);
 				req.setStatus(Status.PENDING);
+				req.setCourseOffering(courseOffering);
+				req.setStudent(student);
 
 				registrationRequestService.save(req);
-
-				registReq.add(req);
-				student.addRegistrationReq(req);
 			}
-
-			courseOffering.setRegistrationsRequests(registReq);
-
-			courseOfferingService.save(courseOffering);
 		}
 	}
 }
