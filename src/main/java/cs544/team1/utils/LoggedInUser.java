@@ -17,4 +17,5 @@ public class LoggedInUser {
     public static Person get(){
         return new Person();
     }
+
 }

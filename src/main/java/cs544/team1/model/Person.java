@@ -21,6 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@NamedQuery(name = "Person.loginWithUserName", query = "SELECT s FROM Person s WHERE s.username = :username")
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
