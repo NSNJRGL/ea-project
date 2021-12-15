@@ -1,21 +1,19 @@
 package cs544.team1.service;
 
-import cs544.team1.model.Admin;
-import cs544.team1.model.Faculty;
 import cs544.team1.model.Person;
-import cs544.team1.model.Student;
+import cs544.team1.model.Resource;
 import cs544.team1.repository.PersonRepository;
+import cs544.team1.repository.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.Query;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonServiceImpl implements IPersonService {
+public class ResourceServiceImpl implements IResourceService  {
     @Autowired
-    PersonRepository repository;
+    ResourceRepository repository;
 
     @Override
     public List findAll() {
@@ -24,7 +22,7 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public Object save(Object o) {
-        return repository.save((Person) o);
+        return repository.save((Resource) o);
     }
 
     @Override
@@ -40,19 +38,8 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public void delete(int id) {
-//repository.delete(id);
+
     }
 
-    @Override
-    public Person loginByUserName(String username) {
-        System.out.println("MEthod=" + this.getClass().getName() + " --Loginwith username");
-        Person p = repository.loginWithUserName(username);
-        System.out.println("++++++++++++++++++++++++++++++");
 
-
-        System.out.println("SIMPLEName==" + p.getClass().getSimpleName());
-
-
-        return p;
-    }
 }
