@@ -42,4 +42,9 @@ public class RegistrationGroupServiceImpl implements IRegistrationGroupService  
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
 }

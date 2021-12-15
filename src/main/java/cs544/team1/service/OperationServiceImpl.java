@@ -40,5 +40,10 @@ public class OperationServiceImpl implements IOperationService  {
 
     }
 
+    @Override
+    public void deleteById(int id){
+
+    }
+
 
 }

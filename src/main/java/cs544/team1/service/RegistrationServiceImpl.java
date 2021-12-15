@@ -38,4 +38,9 @@ public class RegistrationServiceImpl implements IRegistrationService  {
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
 }

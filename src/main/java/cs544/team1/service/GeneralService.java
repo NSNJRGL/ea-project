@@ -11,6 +11,7 @@ public interface GeneralService<T>  {
     Optional<T> findById(int id);
     Long count();
     void delete(int id);
+    void deleteById(int id);
 
 
 }

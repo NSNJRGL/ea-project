@@ -40,6 +40,11 @@ public class CourseOfferingSericeImpl implements  ICourseOfferingService{
     }
 
     @Override
+    public void deleteById(int id){
+
+    }
+
+    @Override
     public List<AcademicBlock> findAll() {
         List<AcademicBlock> list= new ArrayList<>();
 //        Audit a= new Audit();

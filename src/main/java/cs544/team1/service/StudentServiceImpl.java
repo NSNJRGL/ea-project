@@ -52,4 +52,9 @@ public class StudentServiceImpl implements IStudentService  {
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
 }

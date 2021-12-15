@@ -36,4 +36,9 @@ public class AdminServiceImpl implements IAdminService {
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
 }

@@ -10,4 +10,8 @@ import java.util.Optional;
 
 public  interface IRegistrationEventService extends GeneralService {
 
+    public RegistrationEvent updateEvent(RegistrationEvent event, int id);
+
+    public RegistrationEvent findFirstEvent();
+
 }
