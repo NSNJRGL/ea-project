@@ -2,6 +2,7 @@ package cs544.team1.service;
 
 import cs544.team1.model.RegistrationEvent;
 import cs544.team1.projection.RegistrationEventDTO;
+import cs544.team1.model.RegistrationRequest;
 import cs544.team1.repository.RegistrationEventRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RegistrationEventServiceImpl implements IRegistrationEventService  {
+public class RegistrationEventServiceImpl implements IRegistrationEventService {
 
 //    private SessionFactory sf;
 //
@@ -27,6 +28,14 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     public List<RegistrationEvent> getLatestRegistationEvents(String studentID) {
 
         return repository.getLatestRegistationEvents(studentID);
+    }
+
+    public List<RegistrationEvent> getCurrentEvents(LocalDateTime now) {
+        return repository.getCurrentEvents(now);
+    }
+
+    public RegistrationEvent findByRegistrationRequest(long id) {
+        return repository.findByRegistrationRequest(id);
     }
 
 
@@ -61,12 +70,12 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
 //    }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
         RegistrationEvent managed = findById(id).orElse(null);
-        if(managed!=null){
+        if (managed != null) {
             repository.deleteById(id);
             System.out.println("Registration event deleted");
-        }else {
+        } else {
             System.out.println("Registration event ID doesn't exist");
         }
     }
@@ -83,17 +92,17 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
 //    }
 
     @Override
-    public RegistrationEvent updateEvent(RegistrationEvent event,int id) {
+    public RegistrationEvent updateEvent(RegistrationEvent event, int id) {
         RegistrationEvent entity = findById(id).orElse(null);
-        if(entity!=null){
+        if (entity != null) {
             entity.setStartDate(event.getStartDate());
             entity.setEndDate(event.getEndDate());
 //            entity.setRegistrationGroup(event.getRegistrationGroup());
             return repository.save(entity);
         }
         return null;
-    }
 
+    }
 
 
 //    @Override
@@ -106,7 +115,7 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     // Student to see the latest Registration Event Use case Number 1 (3) - in Service Implementation
 
     @Override
-    public RegistrationEventDTO findFirstEvent(){
+    public RegistrationEventDTO findFirstEvent() {
 
         RegistrationEvent latest = repository.findFirstByOrderByStartDateDesc();
         RegistrationEventDTO dto = new RegistrationEventDTO();
@@ -117,15 +126,13 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
 
 
         LocalDateTime now = LocalDateTime.now();
-        if (now.isBefore(latest.getStartDate())){
+        if (now.isBefore(latest.getStartDate())) {
             dto.setStatus("notOpened");
             return dto;
-        }
-        else if (now.isBefore(latest.getEndDate()) && now.isAfter(latest.getStartDate())){
+        } else if (now.isBefore(latest.getEndDate()) && now.isAfter(latest.getStartDate())) {
             dto.setStatus("open_In_Progress");
             return dto;
-        }
-        else{
+        } else {
             dto.setStatus("closed");
             return dto;
         }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegistrationEventDTO {
-    private int id;
+    private long id;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Audit audit;

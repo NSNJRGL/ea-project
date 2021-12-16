@@ -9,11 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 @Transactional
-public interface RegistrationEventRepository extends JpaRepository<RegistrationEvent,Integer> {
+public interface RegistrationEventRepository extends JpaRepository<RegistrationEvent, Integer> {
 
 //    @Query("select rv from RegistrationEvent rv join rv.registrationGroups rg " +
 //            "where rg.students.studentId = :id")
@@ -26,7 +27,13 @@ public interface RegistrationEventRepository extends JpaRepository<RegistrationE
 //            "join rg.students s where s.studentId = :studentid")
     public List<RegistrationEvent> getLatestRegistationEvents(@Param("id") String id);
 
+    @Query("from RegistrationEvent re where :currentDate BETWEEN re.startDate and re.endDate")
+    List<RegistrationEvent> getCurrentEvents(LocalDateTime currentDate);
 
+    @Query("from RegistrationEvent re join re.registrationGroups rg" +
+            " join rg.students st join st.registrationsRequests rr" +
+            " where rr.id = :id")
+    RegistrationEvent findByRegistrationRequest(long id);
 
     // ##################################################################################################
     // Student to see the latest Registration Event Use case Number 1 (1) - n repository
