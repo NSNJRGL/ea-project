@@ -72,7 +72,8 @@ public class FackerController {
 				"/api/courses",
 				"/api/blocks",
 				"/RegEvent",
-				"/registration"
+				"/registration",
+				"/api/mail/send"
 
 		};
 		String[] resourceNames={
@@ -80,9 +81,9 @@ public class FackerController {
 				"Get all Courses",
 				"GetAll Blocks",
 				"Registration Event",
-
-
-		};
+				"events",
+				"Mail Send"
+       	};
 		for (int i = 0; i < resourcePath.length; i++) {
 			Resource resource= new Resource();
 			resource.setName(resourceNames[i]);
