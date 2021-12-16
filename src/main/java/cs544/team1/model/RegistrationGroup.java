@@ -16,8 +16,8 @@ import lombok.ToString;
 
 @EqualsAndHashCode
 @NoArgsConstructor
-@Setter @Getter
-@ToString
+@Setter
+@Getter
 @AllArgsConstructor
 @Entity
 public class RegistrationGroup {
@@ -26,25 +26,17 @@ public class RegistrationGroup {
     private long id;
     private String code;
 
-    @OneToMany(targetEntity=AcademicBlock.class,cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    //@JoinColumn(name = "Reg_Group_ID")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "registrationGroup")
     private List<AcademicBlock> academicBlocks;
 
-    @OneToMany(targetEntity=Student.class,cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    //@JoinColumn(name = "Reg_Group_ID")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "reg_group_id")
     private List<Student> students = new ArrayList<>();
 
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "registration_group_event",
-//            joinColumns = {@JoinColumn(name = "group_id")},
-//            inverseJoinColumns = { @JoinColumn(name = "event_id")}
-//
-//    )
- //   private List<RegistrationEvent>registrationEvents ;
     @Embedded
     private Audit audit;
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
 }

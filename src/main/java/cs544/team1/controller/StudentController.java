@@ -1,6 +1,7 @@
 package cs544.team1.controller;
 
 
+import cs544.team1.model.Registration;
 import cs544.team1.model.Student;
 import cs544.team1.service.IStudentService;
 import cs544.team1.service.StudentServiceImpl;
@@ -22,12 +23,14 @@ public class StudentController {
     }
 
 
-//    @PostMapping("/")
-//    public Student save(@RequestBody Student student ){
-//        return studentService.save(student);
-//    }
-//
+ 
+    //#########################################################################################################
+    // //Student to find registrations use case number 6  (4-in controller)
 
-
+    @GetMapping("/registrations/{studentId}")
+    public List<Registration> findRegistrationByStudent(@PathVariable String id){
+        return studentService.findRegistrationByStudent(id);
+    }
+ 
 
 }

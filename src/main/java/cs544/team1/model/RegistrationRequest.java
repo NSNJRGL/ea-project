@@ -27,6 +27,8 @@ public class RegistrationRequest {
     private CourseOffering courseOffering;
     @ManyToOne
     private Student student;
+    @ManyToOne
+    private AcademicBlock block;
     
     public boolean isPending() {
     	return status == Status.PENDING;
