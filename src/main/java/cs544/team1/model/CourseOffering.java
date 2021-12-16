@@ -1,8 +1,5 @@
 package cs544.team1.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,33 +11,26 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class CourseOffering {
     @Id
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String code;
+    private int capacity;
+
     @OneToOne
     private Course course;
-    private int capacity;
+
     @OneToOne
     private Faculty faculty;
 
-
     @ManyToOne
-    @JoinColumn(name = "blockID")
+    @JoinColumn(name = "block_id")
     private AcademicBlock block;
 
-
-    @OneToMany
-    @JoinColumn(name="course_offering_id")
-    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "student")
 	private List<Registration> registrations = new ArrayList<>();
-
-//    @OneToMany
-//    @JoinColumn(name="course_offering_id")
-//    private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
 
     @Embedded
 	private Audit audit;

@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class AcademicBlock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +29,11 @@ public class AcademicBlock{
     private Semester semester;
 
     @OneToMany(mappedBy = "block")
-    //@JoinColumn(name="blockID")
     private List<CourseOffering> courseOfferings = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "reg_group_id")
+    private RegistrationGroup registrationGroup;
 
     @Embedded
 	private Audit audit;

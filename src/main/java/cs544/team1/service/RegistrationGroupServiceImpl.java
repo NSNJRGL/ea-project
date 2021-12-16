@@ -1,5 +1,6 @@
 package cs544.team1.service;
 
+import cs544.team1.model.RegistrationEvent;
 import cs544.team1.model.RegistrationGroup;
 import cs544.team1.repository.RegistrationGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ import java.util.Optional;
 public class RegistrationGroupServiceImpl implements IRegistrationGroupService  {
     @Autowired
     RegistrationGroupRepository repository;
+
+    public List<RegistrationGroup> findByRegistrationEvent(long registrationEvent) {
+        return repository.findByRegistrationId(registrationEvent);
+    }
 
     @Override
     public List findAll() {
@@ -35,6 +40,11 @@ public class RegistrationGroupServiceImpl implements IRegistrationGroupService  
 
     @Override
     public void delete(int id) {
+
+    }
+
+    @Override
+    public void deleteById(int id){
 
     }
 }

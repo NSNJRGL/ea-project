@@ -1,5 +1,7 @@
 package cs544.team1.service;
 
+import cs544.team1.model.AcademicBlock;
+import cs544.team1.model.CourseOffering;
 import cs544.team1.model.RegistrationRequest;
 import cs544.team1.model.Student;
 import cs544.team1.projection.RegistrationRequestProjection;
@@ -17,6 +19,10 @@ public class RegistrationRequestServiceImpl implements IRegistrationRequestServi
     
     public List<RegistrationRequest> findByStatus(String status) {
     	return repository.findByStatus(status);
+    }
+
+    public RegistrationRequest findByAttributes(int priority, AcademicBlock block, Student student) {
+        return repository.findByAttributes(priority, block, student);
     }
 
     @Override
@@ -41,6 +47,11 @@ public class RegistrationRequestServiceImpl implements IRegistrationRequestServi
 
     @Override
     public void delete(int id) {
+
+    }
+
+    @Override
+    public void deleteById(int id){
 
     }
 

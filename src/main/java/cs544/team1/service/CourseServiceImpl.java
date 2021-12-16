@@ -36,4 +36,9 @@ public class CourseServiceImpl implements ICourseService  {
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
 }

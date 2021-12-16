@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -24,6 +25,7 @@ public interface RegistrationEventRepository extends JpaRepository<RegistrationE
 
     @Query("select distinct rv from RegistrationEvent rv join fetch rv.registrationGroups rg  join rg.students s " +
             "where s.studentId = :id")
+    public RegistrationEvent getLatestRegistationEvents(@Param("id") String id);
 
 //    @Query("select rv from RegistrationEvent rv join rv.registrationGroups rg " +
 //            "join rg.academicBlocks ab join ab.courseOfferings co " +
@@ -45,6 +47,19 @@ public interface RegistrationEventRepository extends JpaRepository<RegistrationE
 //            "join re.AcademicBlock ab join ab.CourseOffering where s.studentId = :id")
 
     //@Query("select rv from RegistrationEvent rv join rv.registrationGroups rg where rg.students.s = :id")
-    public RegistrationEvent getLatestRegistationEvents(@Param("id") String id);
+
+
+    @Query("from RegistrationEvent re where :currentDate BETWEEN re.startDate and re.endDate")
+    List<RegistrationEvent> getCurrentEvents(LocalDateTime currentDate);
+
+    @Query("from RegistrationEvent re join re.registrationGroups rg" +
+            " join rg.students st join st.registrationsRequests rr" +
+            " where rr.id = :id")
+    RegistrationEvent findByRegistrationRequest(long id);
+
+    // ##################################################################################################
+    // Student to see the latest Registration Event Use case Number 1 (1) - n repository
+
+    RegistrationEvent findFirstByOrderByStartDateDesc();
 
 }

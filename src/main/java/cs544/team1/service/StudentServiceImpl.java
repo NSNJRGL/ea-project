@@ -1,8 +1,6 @@
 package cs544.team1.service;
 
-import cs544.team1.model.RegistrationEvent;
-import cs544.team1.model.RegistrationRequest;
-import cs544.team1.model.Student;
+import cs544.team1.model.*;
 import cs544.team1.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -10,11 +8,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements IStudentService  {
     @Autowired
     StudentRepository repository;
+
+    public List<Student> findByRegistrationEvent(long registrationEventId) {
+        return repository.findByRegistrationEvent(registrationEventId);
+    }
 
     @Override
     public List findAll() {
@@ -37,7 +40,6 @@ public class StudentServiceImpl implements IStudentService  {
 //    }
 
 
-
     @Override
     public Long count() {
         return null;
@@ -48,8 +50,16 @@ public class StudentServiceImpl implements IStudentService  {
 
     }
 
-//    @Override
-//    public List<Student> findStudentsByGroupId(long id) {
-//        return  repository.findStudentsByGroupId(id);
-//    }
+    @Override
+    public void deleteById(int id){
+
+    }
+
+    //##################################################################################################
+    //Student to find registrations use case number 6  (3)- in service implementation
+    @Override
+    public List<Registration> findRegistrationByStudent(String id){
+        return repository.findRegistrationByStudent(id);
+    }
+
 }
