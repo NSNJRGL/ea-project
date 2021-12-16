@@ -13,7 +13,6 @@ public class CheckAuthorizationUtil {
     public  boolean check( String method, String path,String role){
 
         if (method.equalsIgnoreCase("GET")){
-
         return   repository.canGET( path,role);
         }else if(method.equalsIgnoreCase("POST")){
            return repository.canPOST(  path,role);
