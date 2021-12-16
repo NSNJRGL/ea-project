@@ -1,5 +1,8 @@
 package cs544.team1.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,6 +14,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class CourseOffering {
     @Id
       @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +29,13 @@ public class CourseOffering {
 
 
     @ManyToOne
-    @JoinColumn(name = "block_id")
+    @JoinColumn(name = "blockID")
     private AcademicBlock block;
 
 
     @OneToMany
     @JoinColumn(name="course_offering_id")
+    @JsonIgnore
 	private List<Registration> registrations = new ArrayList<>();
 
 //    @OneToMany

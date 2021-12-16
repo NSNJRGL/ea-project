@@ -29,7 +29,8 @@ public class AcademicBlock{
     @Enumerated(EnumType.STRING)
     private Semester semester;
 
-    @OneToMany
+    @OneToMany(mappedBy = "block")
+    //@JoinColumn(name="blockID")
     private List<CourseOffering> courseOfferings = new ArrayList<>();
 
     @Embedded

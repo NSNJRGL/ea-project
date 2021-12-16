@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,14 +28,16 @@ public class RegistrationGroup {
     private long id;
     private String code;
 
-    @OneToMany(targetEntity=AcademicBlock.class,cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    //@JoinColumn(name = "Reg_Group_ID")
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "group_ID")
     private List<AcademicBlock> academicBlocks;
 
-    @OneToMany(targetEntity=Student.class,cascade = CascadeType.ALL,
+    //@Transient
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     //@JoinColumn(name = "Reg_Group_ID")
+    //@JsonManagedReference
+    @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
 
@@ -52,7 +56,7 @@ public class RegistrationGroup {
         academicBlocks.add(block);
     }
 
-    public void addStudent(Student student) {
-        students.add(student);
-    }
+//    public void addStudent(Student student) {
+//        students.add(student);
+//    }
 }

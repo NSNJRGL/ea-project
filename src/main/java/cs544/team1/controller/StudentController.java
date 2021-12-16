@@ -27,4 +27,14 @@ public class StudentController {
     public List<Student> getAll( ){
         return studentService.findAll();
     }
+
+//    @GetMapping("/group/{id}")
+//    public List<Student> getStudentsByGroup( @PathVariable long id)
+//    {
+//        return studentService.findStudentsByGroupId(id);
+//    }
+
+
+
+
 }

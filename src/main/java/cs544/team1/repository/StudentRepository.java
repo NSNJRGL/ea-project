@@ -13,8 +13,10 @@ import java.util.List;
 @Transactional
 public interface StudentRepository extends JpaRepository<Student,Integer> {
 
+//    @Query("select s from Student s where s.group.id = :id")
+//     List<Student> findStudentsByGroupId(long id);
+
     //@Query("select s from Student s where s.group.id = :id")
-    //public List<Student> getStudentsByGroupID(@Param("id") long id);
-    //public List<Student> findStudentsByGroupId(long id);
+    Student findStudentsById(long id);
 
 }

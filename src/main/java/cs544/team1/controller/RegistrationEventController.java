@@ -15,13 +15,8 @@ public class RegistrationEventController {
     @Autowired
     private RegistrationEventServiceImpl registrationEventService;
 
-    @GetMapping("/")
-    public void getPrintSomethin(){
-        System.out.println("Controller Testing");
-    }
-
     @GetMapping("/{id}")
-    public @ResponseBody List<RegistrationEvent> getRegEvent(@PathVariable String id){
+    public @ResponseBody RegistrationEvent getRegEvent(@PathVariable String id){
         return registrationEventService.getLatestRegistationEvents(id);
     }
 }
