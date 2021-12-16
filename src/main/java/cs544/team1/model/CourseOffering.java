@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class CourseOffering {
     @Id
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long id;
     private String code;
@@ -29,8 +29,7 @@ public class CourseOffering {
     private AcademicBlock block;
 
 
-    @OneToMany
-    @JoinColumn(name="course_offering_id")
+    @OneToMany(mappedBy = "student")
 	private List<Registration> registrations = new ArrayList<>();
 
 //    @OneToMany

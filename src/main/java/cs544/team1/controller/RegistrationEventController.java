@@ -5,7 +5,6 @@ import cs544.team1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -16,16 +15,22 @@ import java.util.*;
 public class RegistrationEventController {
 
     @Autowired
-    IRegistrationEventService service;
+    private IRegistrationEventService service;
 
-//    @Autowired
-//    private RegistrationEventServiceImpl registrationEventService;
+    @Autowired
+    private RegistrationServiceImpl registrationService;
+
+    @Autowired
+    private RegistrationRequestServiceImpl registrationRequestService;
 
     @Autowired
     private RegistrationGroupServiceImpl registrationGroupService;
 
     @Autowired
     private StudentServiceImpl studentService;
+
+    @Autowired
+    private AcademincBlockSericeImpl blockService;
 
     @GetMapping("/")
     public void getPrintSomethin(){
@@ -40,10 +45,49 @@ public class RegistrationEventController {
     @PatchMapping("/{id}/update")
     public ResponseEntity<String> updateRegistrationEvent (@PathVariable long id) {
         try {
-//            List<RegistrationGroup> regGroup = registrationGroupService.findByRegistrationEvent(id);
-            List<Student> students = studentService.findByRegistrationGroup(id);
-            System.out.println("student" + students);
-            return new ResponseEntity(students, HttpStatus.OK);
+            List<Student> students = studentService.findByRegistrationEvent(id);
+//            List<RegistrationRequestProjection> requests = new ArrayList<>();
+//            for (Student student : students) {
+//                List<RegistrationRequestProjection> list = registrationRequestService.findByStudentId(student.getId());
+//
+//                for (RegistrationRequestProjection request : list) {
+//                    requests.add(request);
+//                }
+//            }
+//
+//            for(RegistrationRequestProjection request : requests) {
+//                System.out.println("student" + request.getStudent());
+//            }
+
+            List<RegistrationGroup> groups = registrationGroupService.findByRegistrationEvent(id);
+            List<AcademicBlock> blocks = blockService.findByRegistrationGroup(groups);
+            int priority = 1;
+//            System.out.println("groups -------- " + groups);
+//            System.out.println("block -------- " + blocks);
+//
+            for (AcademicBlock block : blocks) {
+                if(priority % 2 == 0) {
+                    Collections.reverse(students);
+                }
+                for (Student student : students) {
+                    RegistrationRequest registrationRequest = registrationRequestService.findByAttributes(priority, block, student);
+                    if (registrationRequest != null) {
+                        CourseOffering courseOffering = registrationRequest.getCourseOffering();
+                        if (courseOffering.getCapacity() > 0) {
+                            Registration registration = new Registration();
+                            registration.setStudent(student);
+                            registration.setCourseOffering(courseOffering);
+                            registrationService.save(registration);
+                            courseOffering.setCapacity(courseOffering.getCapacity() - 1);
+                        }
+                        System.out.println("Registration ---- " + registrationRequest);
+                        students.removeIf(s -> s.equals(student));
+                    }
+                }
+                priority++;
+            }
+
+            return new ResponseEntity(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

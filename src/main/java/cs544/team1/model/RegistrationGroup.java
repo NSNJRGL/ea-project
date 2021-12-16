@@ -17,7 +17,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Setter @Getter
-@ToString
 @AllArgsConstructor
 @Entity
 public class RegistrationGroup {
@@ -26,9 +25,7 @@ public class RegistrationGroup {
     private long id;
     private String code;
 
-    @OneToMany(targetEntity=AcademicBlock.class,cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    //@JoinColumn(name = "Reg_Group_ID")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "registrationGroup")
     private List<AcademicBlock> academicBlocks;
 
     @OneToMany(fetch = FetchType.EAGER)

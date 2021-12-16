@@ -18,8 +18,8 @@ public class StudentServiceImpl implements IStudentService  {
     @Autowired
     StudentRepository repository;
 
-    public List<Student> findByRegistrationGroup(long registrationEventId) {
-        return repository.findByRegistrationGroup(registrationEventId);
+    public List<Student> findByRegistrationEvent(long registrationEventId) {
+        return repository.findByRegistrationEvent(registrationEventId);
     }
 
     @Override

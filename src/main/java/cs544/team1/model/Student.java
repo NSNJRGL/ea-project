@@ -21,8 +21,7 @@ import lombok.Setter;
 //@NamedQuery(name = "Studnet.getByGroup",query = " select s from Student  s where s.group.id=:groupId")
 public class Student extends Person {
 	private String studentId;
-	@OneToMany
-	@JoinColumn(name="student_id")
+	@OneToMany(mappedBy = "student")
 	private List<Registration> registrations = new ArrayList<>();
 
 //	@ManyToOne

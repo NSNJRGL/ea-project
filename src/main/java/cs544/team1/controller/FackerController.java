@@ -54,11 +54,11 @@ public class FackerController {
 
 	@GetMapping
 	public void generateFakerData() {
-		fakerAcademicBlock();
 		fakerStudent();
 		fakerFaculty();
 		fakerAdmin();
 		fakerRegistrationGroup();
+		fakerAcademicBlock();
 
 		fakerRegistrationEvent();
 		fakerCourse();
@@ -188,15 +188,15 @@ public class FackerController {
 	public void fakerStudent() {
 		Faker faker = new Faker();
 
-		for (int i = 100; i < 200; i++) {
+		for (int i = 100; i < 110; i++) {
 
 			Student student = new Student();
-			String fname = faker.name().firstName().trim();
-			String lname = faker.name().lastName().trim();
-			student.setFirstName(fname);
-			student.setLastName(lname);
-			student.setUsername( fname);
-			student.setPassword(SHAHash.getSHA256(fname));
+			String fName = faker.name().firstName().trim();
+			String lName = faker.name().lastName().trim();
+			student.setFirstName(fName);
+			student.setLastName(lName);
+			student.setUsername(fName);
+			student.setPassword(SHAHash.getSHA256(fName));
 
 			student.setStudentId("61-21" + i);
 			AcademicBlock academicBlock = new AcademicBlock();
@@ -233,15 +233,18 @@ public class FackerController {
 	public void fakerAcademicBlock() {
 		String[] blocks = { "SEP", "OCT", "NOV", "DEC", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JuL" };
 		Faker faker = new Faker();
+		List<RegistrationGroup> registrationGroups = registrationGroupService.findAll();
 		for (int i = 0; i < 10; i++) {
 			String code = faker.regexify("AB-" + i);
 			String name = faker.expression("EXP-");
+			Random random = new Random();
 			AcademicBlock academicBlock = new AcademicBlock();
 			academicBlock.setCode(blocks[i]);
 			academicBlock.setName("ACadamic Block " + blocks[i]);
 			academicBlock.setEndDate(LocalDate.now());
 			academicBlock.setStartDate(LocalDate.now());
 			academicBlock.setSemester(Semester.SPRING);
+			academicBlock.setRegistrationGroup(registrationGroups.get(random.nextInt(registrationGroups.size())));
 
 			academicBlockService.save(academicBlock);
 
@@ -270,7 +273,6 @@ public class FackerController {
 			courseOffering.setCourse(course);
 			courseOffering.setBlock(academicBlocks.get(academicRandom));
 			courseOffering.setCapacity(40);
-			List<RegistrationRequest> registReq = new ArrayList<>();
 			i++;
 			courseOfferingService.save(courseOffering);
 
@@ -280,6 +282,7 @@ public class FackerController {
 				req.setStatus(Status.PENDING);
 				req.setCourseOffering(courseOffering);
 				req.setStudent(student);
+				req.setBlock(academicBlocks.get(academicRandom));
 
 				registrationRequestService.save(req);
 			}
