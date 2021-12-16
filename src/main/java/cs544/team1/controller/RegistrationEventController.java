@@ -142,7 +142,7 @@ public class RegistrationEventController {
 //
 //    // Get a Registration Event by ID ########################################################################
 //    @GetMapping("/{id}")
-//    public ResponseEntity<RegistrationEvent> getOneTicket(@PathVariable int id) {
+//    public ResponseEntity<RegistrationEvent> getAnEvent(@PathVariable int id) {
 //        Optional<RegistrationEvent> event = service.findById(id);
 //
 //        if (event.isPresent()) {
