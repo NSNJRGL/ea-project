@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -57,8 +58,8 @@ public class FackerController {
 		fakerStudent();
 		fakerFaculty();
 		fakerAdmin();
-
 		fakerRegistrationGroup();
+
 		fakerRegistrationEvent();
 		fakerCourse();
 		fakerCourseOffering();
@@ -121,9 +122,15 @@ public class FackerController {
 	}
 	public void fakerRegistrationGroup() {
 		String[] entry = { "FEB", "MAY", "AUG", "NOV" };
+		List<Student> students = studentService.findAll();
 		for (int i = 0; i < 3; i++) {
+			Random rand = new Random();
 			RegistrationGroup obj = new RegistrationGroup();
 			obj.setCode(entry[i] + LocalDate.now().getYear());
+//			TODO: randomize
+			for(Student student : students) {
+				obj.addStudent(student);
+			}
 			registrationGroupService.save(obj);
 		}
 	}
@@ -180,6 +187,7 @@ public class FackerController {
 
 	public void fakerStudent() {
 		Faker faker = new Faker();
+
 		for (int i = 100; i < 200; i++) {
 
 			Student student = new Student();

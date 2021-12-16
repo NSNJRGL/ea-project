@@ -31,9 +31,8 @@ public class RegistrationGroup {
     //@JoinColumn(name = "Reg_Group_ID")
     private List<AcademicBlock> academicBlocks;
 
-    @OneToMany(targetEntity=Student.class,cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    //@JoinColumn(name = "Reg_Group_ID")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "reg_group_id")
     private List<Student> students = new ArrayList<>();
 
 
@@ -47,4 +46,8 @@ public class RegistrationGroup {
  //   private List<RegistrationEvent>registrationEvents ;
     @Embedded
     private Audit audit;
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
 }
