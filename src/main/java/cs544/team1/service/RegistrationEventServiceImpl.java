@@ -1,16 +1,19 @@
 package cs544.team1.service;
 
 import cs544.team1.model.RegistrationEvent;
+import cs544.team1.model.RegistrationRequest;
 import cs544.team1.repository.RegistrationEventRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RegistrationEventServiceImpl implements IRegistrationEventService  {
+public class RegistrationEventServiceImpl implements IRegistrationEventService {
 
 //    private SessionFactory sf;
 //
@@ -25,6 +28,14 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     public List<RegistrationEvent> getLatestRegistationEvents(String studentID) {
 
         return repository.getLatestRegistationEvents(studentID);
+    }
+
+    public List<RegistrationEvent> getCurrentEvents(LocalDateTime now) {
+        return repository.getCurrentEvents(now);
+    }
+
+    public RegistrationEvent findByRegistrationRequest(long id) {
+        return repository.findByRegistrationRequest(id);
     }
 
 
@@ -54,12 +65,12 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
 
     }
 
     @Override
-    public RegistrationEvent updateEvent(RegistrationEvent event,int id) {
+    public RegistrationEvent updateEvent(RegistrationEvent event, int id) {
         RegistrationEvent entity = (RegistrationEvent) findById(id).orElse(null);
         assert entity != null;
         entity.setStartDate(event.getStartDate());
@@ -69,7 +80,7 @@ public class RegistrationEventServiceImpl implements IRegistrationEventService  
     }
 
     @Override
-    public RegistrationEvent findFirstEvent(){
+    public RegistrationEvent findFirstEvent() {
         return repository.findFirstByOrderByStartDateDesc();
     }
 
