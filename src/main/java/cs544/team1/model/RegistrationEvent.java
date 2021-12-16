@@ -21,7 +21,7 @@ import lombok.Setter;
 public class RegistrationEvent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long id;
+	private int id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 
