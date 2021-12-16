@@ -54,10 +54,10 @@ public class FackerController {
 
     @GetMapping
     public void generateFakerData() {
+        fakerRegistrationGroup();
         fakerStudent();
         fakerFaculty();
         fakerAdmin();
-        fakerRegistrationGroup();
         fakerAcademicBlock();
 
         fakerRegistrationEvent();
@@ -124,14 +124,9 @@ public class FackerController {
 
     public void fakerRegistrationGroup() {
         String[] entry = {"FEB", "MAY", "AUG", "NOV"};
-        List<Student> students = studentService.findAll();
         for (int i = 0; i < 2; i++) {
             RegistrationGroup obj = new RegistrationGroup();
             obj.setCode(entry[i] + LocalDate.now().getYear());
-//			TODO: randomize
-            for (Student student : students) {
-                obj.addStudent(student);
-            }
             registrationGroupService.save(obj);
         }
     }
@@ -180,9 +175,10 @@ public class FackerController {
 
     public void fakerStudent() {
         Faker faker = new Faker();
+        List<RegistrationGroup> registrationGroups = registrationGroupService.findAll();
 
         for (int i = 100; i < 120; i++) {
-
+            Random random = new Random();
             Student student = new Student();
             String fName = faker.name().firstName().trim();
             String lName = faker.name().lastName().trim();
@@ -194,10 +190,8 @@ public class FackerController {
             student.setStudentId("61-21" + i);
             AcademicBlock academicBlock = new AcademicBlock();
             academicBlock.setId(4 % i);
-            RegistrationGroup group = new RegistrationGroup();
-            group.setId(3);
 
-            // student.setGroup(group);
+            student.setReg_group(registrationGroups.get(random.nextInt(registrationGroups.size())));
             student.setEmail(faker.bothify("????##@gmail.com"));
             studentService.save(student);
         }
