@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +23,11 @@ public class Student extends Person {
     private String studentId;
     @OneToMany(mappedBy = "student")
     private List<Registration> registrations = new ArrayList<>();
+
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "group_id")
+	private  RegistrationGroup group;
 
     @OneToMany
     @JoinColumn(name = "student_id")

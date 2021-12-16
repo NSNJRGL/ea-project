@@ -15,7 +15,7 @@ import java.util.*;
 @RequestMapping("/registration-events")
 public class RegistrationEventController {
 
-    private IRegistrationEventService service;
+    private RegistrationEventServiceImpl service;
 
     @Autowired
     private CourseOfferingSericeImpl courseOfferingSerice;
@@ -36,9 +36,9 @@ public class RegistrationEventController {
     @Autowired
     private RegistrationGroupServiceImpl registrationGroupService;
 
-    @GetMapping("/")
-    public void getPrintSomethin() {
-        System.out.println("Controller Testing");
+    @GetMapping("/{id}")
+    public @ResponseBody RegistrationEvent getRegEvent(@PathVariable String id) {
+        return service.getLatestRegistationEvents(id);
     }
 
 //    @GetMapping("/{id}")
