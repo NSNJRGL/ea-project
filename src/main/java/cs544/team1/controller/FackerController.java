@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 @RestController
 @RequestMapping("/faker")
 public class FackerController {
+
 
 	@Autowired
 	IAcademicBlockService academicBlockService;
@@ -286,4 +288,5 @@ public class FackerController {
 			}
 		}
 	}
+
 }

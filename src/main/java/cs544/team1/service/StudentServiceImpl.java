@@ -1,9 +1,6 @@
 package cs544.team1.service;
 
-import cs544.team1.model.RegistrationEvent;
-import cs544.team1.model.RegistrationGroup;
-import cs544.team1.model.RegistrationRequest;
-import cs544.team1.model.Student;
+import cs544.team1.model.*;
 import cs544.team1.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +15,8 @@ public class StudentServiceImpl implements IStudentService  {
     @Autowired
     StudentRepository repository;
 
-    public List<Student> findByRegistrationGroup(long registrationEventId) {
-        return repository.findByRegistrationGroup(registrationEventId);
+    public List<Student> findByRegistrationEvent(long registrationEventId) {
+        return repository.findByRegistrationEvent(registrationEventId);
     }
 
     @Override
@@ -57,4 +54,12 @@ public class StudentServiceImpl implements IStudentService  {
     public void deleteById(int id){
 
     }
+
+    //##################################################################################################
+    //Student to find registrations use case number 6  (3)- in service implementation
+    @Override
+    public List<Registration> findRegistrationByStudent(String id){
+        return repository.findRegistrationByStudent(id);
+    }
+
 }
