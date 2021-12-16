@@ -14,14 +14,14 @@ public class CheckAuthorizationUtil {
 
         if (method.equalsIgnoreCase("GET")){
 
-        return   repository.canGET(path,role);
+        return   repository.canGET( path,role);
         }else if(method.equalsIgnoreCase("POST")){
-           return repository.canPOST(path,role);
+           return repository.canPOST(  path,role);
 
         }else  if(method.equalsIgnoreCase("PUT")||method.equalsIgnoreCase("PATCH")){
-           return repository.canPUT(path,role);
+           return repository.canPUT( path,role);
         }else  if(method.equalsIgnoreCase("DELETE")){
-          return   repository.canDELETE(path,role);
+          return   repository.canDELETE( path,role);
         }else {
             return true;
         }
