@@ -18,18 +18,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-//@NamedQuery(name = "Studnet.getByGroup",query = " select s from Student  s where s.group.id=:groupId")
 public class Student extends Person {
-	private String studentId;
-	@OneToMany(mappedBy = "student")
-	private List<Registration> registrations = new ArrayList<>();
+    private String studentId;
+    @OneToMany(mappedBy = "student")
+    private List<Registration> registrations = new ArrayList<>();
 
-//	@ManyToOne
-//	@JoinColumn(name = "group")
-//	private  RegistrationGroup group;
-	@OneToMany
-	@JoinColumn(name="student_id")
-	private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
-	@Embedded
-	private Audit audit;
+    @OneToMany
+    @JoinColumn(name = "student_id")
+    private List<RegistrationRequest> registrationsRequests = new ArrayList<>();
+    @Embedded
+    private Audit audit;
 }

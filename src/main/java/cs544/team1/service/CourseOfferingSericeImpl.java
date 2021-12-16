@@ -1,9 +1,6 @@
 package cs544.team1.service;
 
-import cs544.team1.model.AcademicBlock;
-import cs544.team1.model.Audit;
-import cs544.team1.model.CourseOffering;
-import cs544.team1.model.Semester;
+import cs544.team1.model.*;
 import cs544.team1.repository.CourseOfferingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,10 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CourseOfferingSericeImpl implements  ICourseOfferingService{
+public class CourseOfferingSericeImpl implements ICourseOfferingService {
 
     @Autowired
     CourseOfferingRepository repository;
+
+    public CourseOffering findByBlocks(AcademicBlock block) {
+        return repository.findByBlock(block);
+    }
+
     @Override
     public Object save(Object o) {
         return repository.save((CourseOffering) o);
@@ -40,13 +42,13 @@ public class CourseOfferingSericeImpl implements  ICourseOfferingService{
     }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
 
     }
 
     @Override
     public List<AcademicBlock> findAll() {
-        List<AcademicBlock> list= new ArrayList<>();
+        List<AcademicBlock> list = new ArrayList<>();
 //        Audit a= new Audit();
 //        list.add(new AcademicBlock(1,"codd1","name1", LocalDate.now(),
 //                LocalDate.now(), Semester.SPRING,a));

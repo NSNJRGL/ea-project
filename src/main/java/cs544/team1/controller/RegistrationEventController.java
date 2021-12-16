@@ -18,6 +18,9 @@ public class RegistrationEventController {
     private IRegistrationEventService service;
 
     @Autowired
+    private CourseOfferingSericeImpl courseOfferingSerice;
+
+    @Autowired
     private RegistrationServiceImpl registrationService;
 
     @Autowired
@@ -33,7 +36,7 @@ public class RegistrationEventController {
     private AcademincBlockSericeImpl blockService;
 
     @GetMapping("/")
-    public void getPrintSomethin(){
+    public void getPrintSomethin() {
         System.out.println("Controller Testing");
     }
 
@@ -43,9 +46,9 @@ public class RegistrationEventController {
 //    }
 
     @PatchMapping("/{id}/update")
-    public ResponseEntity<String> updateRegistrationEvent (@PathVariable long id) {
+    public ResponseEntity<String> updateRegistrationEvent(@PathVariable long id) {
         try {
-            List<Student> students = studentService.findByRegistrationEvent(id);
+
 //            List<RegistrationRequestProjection> requests = new ArrayList<>();
 //            for (Student student : students) {
 //                List<RegistrationRequestProjection> list = registrationRequestService.findByStudentId(student.getId());
@@ -61,30 +64,43 @@ public class RegistrationEventController {
 
             List<RegistrationGroup> groups = registrationGroupService.findByRegistrationEvent(id);
             List<AcademicBlock> blocks = blockService.findByRegistrationGroup(groups);
-            int priority = 1;
-//            System.out.println("groups -------- " + groups);
-//            System.out.println("block -------- " + blocks);
-//
+            int sumOfCapacity = 0;
             for (AcademicBlock block : blocks) {
-                if(priority % 2 == 0) {
-                    Collections.reverse(students);
-                }
-                for (Student student : students) {
-                    RegistrationRequest registrationRequest = registrationRequestService.findByAttributes(priority, block, student);
-                    if (registrationRequest != null) {
-                        CourseOffering courseOffering = registrationRequest.getCourseOffering();
-                        if (courseOffering.getCapacity() > 0) {
-                            Registration registration = new Registration();
-                            registration.setStudent(student);
-                            registration.setCourseOffering(courseOffering);
-                            registrationService.save(registration);
-                            courseOffering.setCapacity(courseOffering.getCapacity() - 1);
-                        }
-                        System.out.println("Registration ---- " + registrationRequest);
-                        students.removeIf(s -> s.equals(student));
+                CourseOffering courseOffering = courseOfferingSerice.findByBlocks(block);
+                sumOfCapacity += courseOffering.getCapacity();
+            }
+
+            System.out.println("groups -------- " + sumOfCapacity);
+
+            int capacity = 0;
+            for (AcademicBlock block : blocks) {
+                int priority = 1;
+                List<Student> students = studentService.findByRegistrationEvent(id);
+
+                while (students.size() > 0) {
+                    if (priority % 2 == 0) {
+                        Collections.reverse(students);
                     }
+                    for (Iterator<Student> iter = students.iterator(); iter.hasNext(); ) {
+                        Student student = iter.next();
+                        RegistrationRequest registrationRequest = registrationRequestService.findByAttributes(priority, block, student);
+                        if (registrationRequest != null) {
+                            CourseOffering courseOffering = registrationRequest.getCourseOffering();
+                            if (courseOffering.getCapacity() > 0) {
+                                Registration registration = new Registration();
+                                registration.setStudent(student);
+                                registration.setCourseOffering(courseOffering);
+                                registrationService.save(registration);
+                                courseOffering.setCapacity(courseOffering.getCapacity() - 1);
+                                capacity++;
+                                courseOfferingSerice.save(courseOffering);
+                                iter.remove();
+                            }
+                            System.out.println("Registration ---- " + students.size() + students);
+                        }
+                    }
+                    priority++;
                 }
-                priority++;
             }
 
             return new ResponseEntity(HttpStatus.OK);
@@ -121,12 +137,11 @@ public class RegistrationEventController {
 
     // Add a Registration Event ########################################################################
     @PostMapping("/addEvent")
-    public void addEvent(@RequestBody RegistrationEvent registrationEvent){
+    public void addEvent(@RequestBody RegistrationEvent registrationEvent) {
         System.out.println("In the Post Method");
         service.save(registrationEvent);
         System.out.println("Successfuly added Event");
     }
-
 
 
     // Delete a Registration Event ########################################################################
@@ -140,12 +155,11 @@ public class RegistrationEventController {
 
     // Update a Registration Event ########################################################################
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateAnEvent(@PathVariable Integer id, @RequestBody RegistrationEvent eventt){
-        if(id.equals(eventt.getId())){
+    public ResponseEntity<?> updateAnEvent(@PathVariable Integer id, @RequestBody RegistrationEvent eventt) {
+        if (id.equals(eventt.getId())) {
             System.out.println("In the If Statement");
-            return ResponseEntity.ok(service.updateEvent(eventt,id));
-        }
-        else {
+            return ResponseEntity.ok(service.updateEvent(eventt, id));
+        } else {
             System.out.println("In the Else Statement");
             return ResponseEntity.badRequest().build();
 
@@ -156,7 +170,7 @@ public class RegistrationEventController {
 // Student to get the latest Registration events
 
     @GetMapping("/latest")
-    public Object findLatestEvent(){
+    public Object findLatestEvent() {
 
         RegistrationEvent latest = service.findFirstEvent();
         HashMap<String, String> notOpened = new HashMap<>();
@@ -169,21 +183,19 @@ public class RegistrationEventController {
         List<Object> objectss = new ArrayList<>();
 
         LocalDateTime now = LocalDateTime.now();
-        if (now.isBefore(latest.getStartDate())){
+        if (now.isBefore(latest.getStartDate())) {
 
             objectss.add(service.findFirstEvent());
             objectss.add(notOpened);
 
             return objectss;
-        }
-        else if (now.isBefore(latest.getEndDate()) && now.isAfter(latest.getStartDate())){
+        } else if (now.isBefore(latest.getEndDate()) && now.isAfter(latest.getStartDate())) {
 
             objectss.add(service.findFirstEvent());
             objectss.add(open_In_Progress);
 
             return objectss;
-        }
-        else{
+        } else {
             objectss.add(service.findFirstEvent());
             objectss.add(closed);
 
@@ -191,8 +203,6 @@ public class RegistrationEventController {
         }
 //        return service.findFirstEvent();
     }
-
-
 
 
 }
