@@ -15,52 +15,54 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    @Autowired
-    private TokenRequestFilter tokenRequestFilter;
+	@Autowired
+	private TokenRequestFilter tokenRequestFilter;
 
-    @Autowired
-    private AuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws
-            Exception {
-        return super.authenticationManagerBean();
-    }
+	@Autowired
+	private AuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws
+			Exception {
+		return super.authenticationManagerBean();
+	}
 
-        // We don't need CSRF for this example
-        httpSecurity.csrf().disable()
-                // dont authenticate this particular request
-                .authorizeRequests().antMatchers("/", "/api/login", "/faker",
-                        "/registration/request/1",
-                        "/registration/update",
-                        "/registration-events",
-                        "/RegEvent/11/update",
-                        "/registration-events/3/update").permitAll().
-                // all other requests need to be authenticated
-                        anyRequest().authenticated().and().
-                // make sure we use stateless session; session won't be used to
-                // store user's state.
-                        exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // Add a filter to validate the tokens with every request
-        httpSecurity.addFilterBefore(tokenRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+	@Override
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(
-                NoOpPasswordEncoder.getInstance());
-    }
+		// We don't need CSRF for this example
+		httpSecurity.csrf().disable()
+				// dont authenticate this particular request
+				.authorizeRequests().antMatchers("/",
+						"/api/login",
+						"/faker",
+						"/registration/request/11",
+						"/registration-events",
+						"/api/mail/send",
+						"/RegEvent/11/update").permitAll().
+				// all other requests need to be authenticated
+						anyRequest().authenticated().and().
+				// make sure we use stateless session; session won't be used to
+				// store user's state.
+						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		// Add a filter to validate the tokens with every request
+		httpSecurity.addFilterBefore(tokenRequestFilter, UsernamePasswordAuthenticationFilter.class);
+	}
+
+	protected void configure(AuthenticationManagerBuilder auth)
+			throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(
+				NoOpPasswordEncoder.getInstance());
+	}
 }
