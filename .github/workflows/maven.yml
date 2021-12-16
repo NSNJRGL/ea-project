@@ -5,9 +5,9 @@ name: EA Project CI CD Workflow
 
 on:
   push:
-    branches: [ muluadam ]
+    branches: [ main ]
   pull_request:
-    branches: [ muluadam ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -23,4 +23,16 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
-      run: mvn clean install 
+      run:  mvn clean package -DskipTests
+
+
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image:  muluadam/ea_project_cms
+        tags: latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: muluadam
+        password: Aman@219@dh
+

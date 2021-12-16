@@ -87,6 +87,10 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.5.3</version>
         </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -108,6 +112,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ea-project-g3</finalName>
 	</build>
 
 </project>
