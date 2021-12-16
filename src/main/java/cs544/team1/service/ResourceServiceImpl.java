@@ -41,5 +41,10 @@ public class ResourceServiceImpl implements IResourceService  {
 
     }
 
+    @Override
+    public void deleteById(int id){
+
+    }
+
 
 }

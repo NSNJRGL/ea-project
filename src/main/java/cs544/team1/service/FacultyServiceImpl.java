@@ -38,4 +38,9 @@ public class FacultyServiceImpl implements IFacultyService  {
     public void delete(int id) {
 
     }
+
+    @Override
+    public void deleteById(int id){
+
+    }
 }
