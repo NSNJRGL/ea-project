@@ -108,6 +108,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ea-project-g3</finalName>
 	</build>
 
 </project>
