@@ -181,7 +181,7 @@ public class FackerController {
     public void fakerStudent() {
         Faker faker = new Faker();
 
-        for (int i = 100; i < 110; i++) {
+        for (int i = 100; i < 120; i++) {
 
             Student student = new Student();
             String fName = faker.name().firstName().trim();
@@ -265,7 +265,7 @@ public class FackerController {
             courseOffering.setFaculty(faculties.get(facultyRandom));
             courseOffering.setCourse(course);
             courseOffering.setBlock(academicBlocks.get(academicRandom));
-            courseOffering.setCapacity(i == 0 ? 10 : 12);
+            courseOffering.setCapacity(40);
             i++;
             courseOfferingService.save(courseOffering);
 
