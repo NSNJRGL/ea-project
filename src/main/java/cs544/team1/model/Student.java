@@ -24,10 +24,10 @@ public class Student extends Person {
     @OneToMany(mappedBy = "student")
     private List<Registration> registrations = new ArrayList<>();
 
-	@ManyToOne
-	@JsonBackReference
-	@JoinColumn(name = "group_id")
-	private  RegistrationGroup group;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "reg_group_id")
+    private RegistrationGroup reg_group;
 
     @OneToMany
     @JoinColumn(name = "student_id")
