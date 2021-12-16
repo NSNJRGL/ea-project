@@ -1,12 +1,10 @@
 package cs544.team1.controller;
 
 
+import cs544.team1.auth.modelRequests.EmailRequest;
 import cs544.team1.utils.EmailUtil;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -19,10 +17,9 @@ public class EmailContoller {
 
 
     @PostMapping(value = "/send")
-    public String sendEmailAPI(@RequestHeader("reciever") String reciever,
-                               @RequestHeader("subject") String subject,
-                               @RequestHeader("body") String body) throws AddressException, MessagingException, IOException {
-        EmailUtil.sendEmailFromAPI(reciever,subject,body);
+    public String sendEmailAPI(@RequestBody EmailRequest req
+                              ) throws AddressException, MessagingException, IOException {
+        EmailUtil.sendEmailFromAPI(req.getReceiver(),req.getSubject(),req.getBody());
         return "Email sent successfully via Header";
     }
 
