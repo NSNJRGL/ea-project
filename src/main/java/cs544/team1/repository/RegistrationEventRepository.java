@@ -35,6 +35,9 @@ public interface RegistrationEventRepository extends JpaRepository<RegistrationE
             " where rr.id = :id")
     RegistrationEvent findByRegistrationRequest(long id);
 
+    // ##################################################################################################
+    // Student to see the latest Registration Event Use case Number 1 (1) - n repository
+
     RegistrationEvent findFirstByOrderByStartDateDesc();
 
 }

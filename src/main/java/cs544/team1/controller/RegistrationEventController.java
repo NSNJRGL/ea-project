@@ -1,6 +1,7 @@
 package cs544.team1.controller;
 
 import cs544.team1.model.*;
+import cs544.team1.projection.RegistrationEventDTO;
 import cs544.team1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import java.util.*;
 @RequestMapping("/registration-events")
 public class RegistrationEventController {
 
-    @Autowired
     private IRegistrationEventService service;
 
     @Autowired
@@ -27,13 +27,14 @@ public class RegistrationEventController {
     private RegistrationRequestServiceImpl registrationRequestService;
 
     @Autowired
-    private RegistrationGroupServiceImpl registrationGroupService;
-
-    @Autowired
+    RegistrationServiceImpl regService;
     private StudentServiceImpl studentService;
 
     @Autowired
     private AcademincBlockSericeImpl blockService;
+
+    @Autowired
+    private RegistrationGroupServiceImpl registrationGroupService;
 
     @GetMapping("/")
     public void getPrintSomethin() {
@@ -103,8 +104,6 @@ public class RegistrationEventController {
     }
 
 
-    //#################################################################################################
-
     // Get all Registration Events ########################################################################
     @GetMapping
     public ResponseEntity<List<RegistrationEvent>> findAll() {
@@ -118,14 +117,11 @@ public class RegistrationEventController {
 
     // Get a Registration Event by ID ########################################################################
     @GetMapping("/{id}")
-    public ResponseEntity<RegistrationEvent> getOneTicket(@PathVariable int id) {
+    public ResponseEntity<RegistrationEvent> getOneEvent(@PathVariable int id) {
         Optional<RegistrationEvent> event = service.findById(id);
 
-        if (event.isPresent()) {
-            return ResponseEntity.ok(event.get());
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+        return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+
     }
 
     // Add a Registration Event ########################################################################
@@ -139,11 +135,8 @@ public class RegistrationEventController {
 
     // Delete a Registration Event ########################################################################
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEvent(@PathVariable int id) {
+    public void deleteEvent(@PathVariable int id) {
         service.deleteById(id);
-        System.out.println("Successfuly deleted Event");
-        return ResponseEntity.noContent().build();
-
     }
 
     // Update a Registration Event ########################################################################
@@ -160,42 +153,11 @@ public class RegistrationEventController {
     }
 
     //########################################################################
-// Student to get the latest Registration events
+    // ##################################################################################################
+    // Student to see the latest Registration Event Use case Number 1 (4) - In Controller
 
     @GetMapping("/latest")
-    public Object findLatestEvent() {
-
-        RegistrationEvent latest = service.findFirstEvent();
-        HashMap<String, String> notOpened = new HashMap<>();
-        notOpened.put("Status", "Not Opened");
-        HashMap<String, String> open_In_Progress = new HashMap<>();
-        open_In_Progress.put("Status", "Opened and In Progress");
-        HashMap<String, String> closed = new HashMap<>();
-        closed.put("Status", "Closed");
-
-        List<Object> objectss = new ArrayList<>();
-
-        LocalDateTime now = LocalDateTime.now();
-        if (now.isBefore(latest.getStartDate())) {
-
-            objectss.add(service.findFirstEvent());
-            objectss.add(notOpened);
-
-            return objectss;
-        } else if (now.isBefore(latest.getEndDate()) && now.isAfter(latest.getStartDate())) {
-
-            objectss.add(service.findFirstEvent());
-            objectss.add(open_In_Progress);
-
-            return objectss;
-        } else {
-            objectss.add(service.findFirstEvent());
-            objectss.add(closed);
-
-            return objectss;
-        }
-//        return service.findFirstEvent();
+    public RegistrationEventDTO findLatestEvent() {
+        return service.findFirstEvent();
     }
-
-
 }
