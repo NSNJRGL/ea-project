@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface RegistrationRequestRepository extends JpaRepository<RegistrationRequest,Integer> {
+
 	List<RegistrationRequestProjection> findByStudentId(long studentId);
 	List<RegistrationRequest> findByStatus(String status);
 }

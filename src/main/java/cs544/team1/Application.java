@@ -18,7 +18,7 @@ public class Application {
 	IAcademicBlockService academicBlockService;
 
 	public static void main(String[] args) {
-
+		System.out.println("Nothing is chenged");
 		SpringApplication.run(Application.class, args);
 	}
 
