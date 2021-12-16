@@ -67,22 +67,29 @@ public class FackerController {
 
 	}
 	public void fakerResource(){
-		Resource resource= new Resource();
-		resource.setName("Get Okay");
-		resource.setPath("/api/ok");
-		resourceService.save(resource);
+		String[] resourcePath={
+				"/api/ok",
+				"/api/courses",
+				"/api/blocks",
+				"/RegEvent",
+				"/registration"
 
-		Resource r1= new Resource();
-		r1.setName("Cources");
-		r1.setPath("/api/courses");
+		};
+		String[] resourceNames={
+				"Testing OK",
+				"Get all Courses",
+				"GetAll Blocks",
+				"Registration Event",
 
-		resourceService.save(r1);
 
-		Resource r2= new Resource();
-		r2.setName("Get Blocks");
+		};
+		for (int i = 0; i < resourcePath.length; i++) {
+			Resource resource= new Resource();
+			resource.setName(resourceNames[i]);
+			resource.setPath(resourcePath[i]);
+			resourceService.save(resource);
+		}
 
-		r2.setPath("/api/blocks");
-		resourceService.save(r2);
 	}
 
 	public void fakerOperation(){
@@ -180,6 +187,7 @@ public class FackerController {
 
 	public void fakerStudent() {
 		Faker faker = new Faker();
+
 		for (int i = 100; i < 200; i++) {
 
 			Student student = new Student();

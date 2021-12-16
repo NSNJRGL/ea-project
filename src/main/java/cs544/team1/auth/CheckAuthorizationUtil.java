@@ -18,7 +18,7 @@ public class CheckAuthorizationUtil {
         }else if(method.equalsIgnoreCase("POST")){
            return repository.canPOST(path,role);
 
-        }else  if(method.equalsIgnoreCase("PUT")){
+        }else  if(method.equalsIgnoreCase("PUT")||method.equalsIgnoreCase("PATCH")){
            return repository.canPUT(path,role);
         }else  if(method.equalsIgnoreCase("DELETE")){
           return   repository.canDELETE(path,role);

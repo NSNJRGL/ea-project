@@ -88,21 +88,21 @@ public class TokenRequestFilter extends OncePerRequestFilter {
         System.out.println("ROLE==" + role);
         String method = request.getMethod();
         String path = request.getRequestURI();
-        chain.doFilter(request, response);
-//        if(path.contains("login")||path.contains("faker")){
-//            chain.doFilter(request, response);
-//
-//        } else {
-//            System.out.println("Role is "+role);
-//            if (checkAuthorizationUtil.check(method, path, role)) {
-//                chain.doFilter(request, response);
-//            } else {
-//             // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//                response.setStatus(401);
-//              //  response.get
-//            }
-//
-//        }
+     //   chain.doFilter(request, response);
+        if(path.contains("login")||path.contains("faker")){
+            chain.doFilter(request, response);
+
+        } else {
+            System.out.println("Role is "+role);
+            if (checkAuthorizationUtil.check(method, path, role)) {
+                chain.doFilter(request, response);
+            } else {
+             // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                response.setStatus(401);
+              //  response.get
+            }
+
+        }
 
 
     }
