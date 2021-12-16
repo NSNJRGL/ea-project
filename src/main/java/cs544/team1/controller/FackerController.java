@@ -265,7 +265,7 @@ public class FackerController {
             courseOffering.setFaculty(faculties.get(facultyRandom));
             courseOffering.setCourse(course);
             courseOffering.setBlock(academicBlocks.get(academicRandom));
-            courseOffering.setCapacity(13);
+            courseOffering.setCapacity(i == 0 ? 10 : 12);
             i++;
             courseOfferingService.save(courseOffering);
 

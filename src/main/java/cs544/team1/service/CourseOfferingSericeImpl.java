@@ -17,10 +17,6 @@ public class CourseOfferingSericeImpl implements ICourseOfferingService {
     @Autowired
     CourseOfferingRepository repository;
 
-    public CourseOffering findByBlocks(AcademicBlock block) {
-        return repository.findByBlock(block);
-    }
-
     @Override
     public Object save(Object o) {
         return repository.save((CourseOffering) o);

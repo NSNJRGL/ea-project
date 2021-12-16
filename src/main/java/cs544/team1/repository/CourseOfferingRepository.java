@@ -12,5 +12,4 @@ import java.util.List;
 @Repository
 @Transactional
 public interface CourseOfferingRepository extends JpaRepository<CourseOffering, Integer> {
-    CourseOffering findByBlock(AcademicBlock block);
 }

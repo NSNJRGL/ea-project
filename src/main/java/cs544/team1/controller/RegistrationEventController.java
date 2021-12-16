@@ -64,15 +64,9 @@ public class RegistrationEventController {
 
             List<RegistrationGroup> groups = registrationGroupService.findByRegistrationEvent(id);
             List<AcademicBlock> blocks = blockService.findByRegistrationGroup(groups);
-            int sumOfCapacity = 0;
-            for (AcademicBlock block : blocks) {
-                CourseOffering courseOffering = courseOfferingSerice.findByBlocks(block);
-                sumOfCapacity += courseOffering.getCapacity();
-            }
 
-            System.out.println("groups -------- " + sumOfCapacity);
-
-            int capacity = 0;
+            System.out.println("groups -------- " + groups.size() + " " + groups);
+            System.out.println("block -------- " + blocks.size() + " " + blocks);
             for (AcademicBlock block : blocks) {
                 int priority = 1;
                 List<Student> students = studentService.findByRegistrationEvent(id);
@@ -92,7 +86,6 @@ public class RegistrationEventController {
                                 registration.setCourseOffering(courseOffering);
                                 registrationService.save(registration);
                                 courseOffering.setCapacity(courseOffering.getCapacity() - 1);
-                                capacity++;
                                 courseOfferingSerice.save(courseOffering);
                                 iter.remove();
                             }
