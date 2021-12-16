@@ -5,9 +5,9 @@ name: EA Project CI CD Workflow
 
 on:
   push:
-    branches: [ muluadam ]
+    branches: [ main ]
   pull_request:
-    branches: [ muluadam ]
+    branches: [ main ]
 
 jobs:
   build:
