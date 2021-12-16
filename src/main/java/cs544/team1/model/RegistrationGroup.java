@@ -29,8 +29,8 @@ public class RegistrationGroup {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "registrationGroup")
     private List<AcademicBlock> academicBlocks;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "reg_group_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "reg_group")
+//    @JoinColumn(name = "reg_group_id")
     private List<Student> students = new ArrayList<>();
 
     @Embedded

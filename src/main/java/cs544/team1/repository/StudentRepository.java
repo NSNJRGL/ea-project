@@ -15,12 +15,12 @@ import java.util.List;
 @Repository
 @Transactional
 public interface StudentRepository extends JpaRepository<Student, Integer> {
-    @Query("select s from RegistrationEvent rv join rv.registrationGroups rg join rg.students s " +
-            "where rv.id= :registrationEventId")
-//    @Query("SELECT s from Student s join RegistrationGroup rg join rg.students rs where  ")
-        //public List<Student> getStudentsByGroupID(@Param("id") long id);
-        //public List<Student> findStudentsByGroupId(long id);
-    List<Student> findByRegistrationGroup(long registrationEventId);
+//    @Query("select s from RegistrationEvent rv join rv.registrationGroups rg join rg.students s " +
+//            "where rv.id= :registrationEventId")
+////    @Query("SELECT s from Student s join RegistrationGroup rg join rg.students rs where  ")
+//        //public List<Student> getStudentsByGroupID(@Param("id") long id);
+//        //public List<Student> findStudentsByGroupId(long id);
+//    List<Student> findByRegistrationGroup(long registrationEventId);
 
 
     //##################################################################################################
@@ -29,5 +29,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query("select s.registrations from Student s where s.studentId = : id")
     List<Registration> findRegistrationByStudent(@Param("id") String id);
 
+    @Query("select s from RegistrationEvent rv join rv.registrationGroups rg join rg.students s " +
+            "where rv.id= :registrationEventId")
     List<Student> findByRegistrationEvent(long registrationEventId);
 }
