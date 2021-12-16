@@ -15,6 +15,16 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "course_offering_id")
+    private CourseOffering courseOffering;
+
     @Embedded
-	private Audit audit;
+    private Audit audit;
 }
