@@ -33,6 +33,6 @@ jobs:
         tags: latest
         registry: docker.io
         dockerfile: Dockerfile
-        username: muluadam
-        password: Aman@219@dh
+        username: 
+        password: 
 
