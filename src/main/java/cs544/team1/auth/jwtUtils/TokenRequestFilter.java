@@ -81,11 +81,11 @@ public class TokenRequestFilter extends OncePerRequestFilter {
             }
         }
 
-        System.out.println("URI=" + request.getMethod());
-        System.out.println("URI" + request.getRequestURI());
-        System.out.println("Protocoal" + request.getProtocol());
-        System.out.println("AuthgType" + request.getAuthType());
-        System.out.println("ROLE==" + role);
+//        System.out.println("URI=" + request.getMethod());
+//        System.out.println("URI" + request.getRequestURI());
+//        System.out.println("Protocoal" + request.getProtocol());
+//        System.out.println("AuthgType" + request.getAuthType());
+//        System.out.println("ROLE==" + role);
         String method = request.getMethod();
         String path = request.getRequestURI();
      //   chain.doFilter(request, response);

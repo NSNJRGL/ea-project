@@ -44,11 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers("/",
 						"/api/login",
-						"/faker",
-						"/registration/request/11",
-						"/registration-events",
-						"/api/mail/send",
-						"/RegEvent/11/update").permitAll().
+						"/faker"
+						 ).permitAll().
 				// all other requests need to be authenticated
 						anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

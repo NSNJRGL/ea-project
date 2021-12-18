@@ -28,4 +28,7 @@ public class StudentController {
         return studentService.findRegistrationByStudent(id);
     }
 
+
+
+
 }
