@@ -62,19 +62,12 @@ public class JWTController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest) throws Exception {
 
         final ResponseEntity<String> response = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        System.out.println(authenticationRequest.getUsername());
-        System.out.println(authenticationRequest.getPassword());
-        System.out.println("_<_<_<_<_<_<_<_<_<_<_<_<___<_<");
 
         Person person = personService.loginByUserName(authenticationRequest.getUsername());
-        System.out.println("---------------------");
-        System.out.println(person.toString());
 
-        System.out.println("-----------------------");
-        System.out.println();
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
-//		System.out.println("============");
+
         System.out.println(SHAHash.getSHA256(authenticationRequest.getPassword()));
         if (userDetails.getPassword().equals(SHAHash.getSHA256(authenticationRequest.getPassword()))) {
             String role = SystemRole.getRole(person);

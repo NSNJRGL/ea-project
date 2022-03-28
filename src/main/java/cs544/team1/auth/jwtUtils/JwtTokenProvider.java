@@ -20,7 +20,7 @@ import java.util.function.Function;
 		public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
 //		@Value("${jwt.secret}")
-		private final String secret = "secret";
+		 private final String secret = "secret";
 
 		//retrieve username from jwt token
 		public String getUsernameFromToken(String token) {
@@ -54,11 +54,11 @@ import java.util.function.Function;
 			return expiration.before(new Date());
 		}
 
-		//generate token for user
-		public String generateToken1(UserDetails userDetails) {
-			Map<String, Object> claims = new HashMap<>();
-			return doGenerateToken(claims, userDetails.getUsername());
-		}
+//		//generate token for user
+//		public String generateToken1(UserDetails userDetails) {
+//			Map<String, Object> claims = new HashMap<>();
+//			return doGenerateToken(claims, userDetails.getUsername());
+//		}
 	public String generateTokenWithRole(UserDetails userDetails,String role) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("role",role);

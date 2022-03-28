@@ -35,5 +35,5 @@ public interface OperationRepository extends JpaRepository<Operation,Integer> {
     @Query(value = "select  op.canDELETE  from Operation op inner join Resource re on " +
             "   op.resource.id = re.id where op.role=:role  and re.path=:path")
     boolean canDELETE( String path, String role);
-
+//
 }

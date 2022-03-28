@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("/faker")
@@ -69,22 +66,38 @@ public class FackerController {
     }
 
     public void fakerResource() {
-        Resource resource = new Resource();
-        resource.setName("Get Okay");
-        resource.setPath("/api/ok");
-        resourceService.save(resource);
 
-        Resource r1 = new Resource();
-        r1.setName("Cources");
-        r1.setPath("/api/courses");
+        String[] resources = {
+                "/api/securetest",
+                "/api/login",
+                "/faker",
+                "/registration/request/",
+                "/registration-events",
+                "/api/mail/send",
+                 "/registration-events/get-latest",
+                "/registration/update",
+                "/registration-events/"
+    };
 
-        resourceService.save(r1);
+        String[] name = {
+                "Okay--",
+                "Login ",
+                "Faker",
+                "Registration Requests",
+                "EMail",
+                "Reg Events",
+                "Registration Events latest",
+                "Resouces",
+                "Updates",
+                "Events"
+        };
+        for (int i = 0; i < resources.length; i++) {
+            Resource r = new Resource();
+            r.setName(name[i]);
+            r.setPath(resources[i]);
+            resourceService.save(r);
+        }
 
-        Resource r2 = new Resource();
-        r2.setName("Get Blocks");
-
-        r2.setPath("/api/blocks");
-        resourceService.save(r2);
     }
 
     public void fakerOperation() {
